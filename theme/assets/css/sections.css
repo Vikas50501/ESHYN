@@ -1,0 +1,953 @@
+/* ==========================================================================
+   ESHYN — Page sections
+   ========================================================================== */
+
+section { position: relative; }
+.section { padding-block: var(--space-3xl); }
+.section--tight { padding-block: var(--space-2xl); }
+/* Alternating tone used between sections so no two adjacent sections share
+   a background — the "zig-zag" rhythm, without going fully binary light/dark. */
+.section--alt { background: var(--color-surface-alt); }
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+.section-head__text { max-width: 34rem; }
+.section-head__text--wide { max-width: 46rem; }
+.section-head h2 { margin-top: var(--space-sm); }
+
+/* ---- Announcement bar ---- */
+.announcement-bar {
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  height: var(--announcement-height);
+}
+.announcement-bar__track {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: var(--space-lg);
+}
+.announcement-bar__messages { display: flex; overflow: hidden; height: 100%; align-items: center; }
+.announcement-bar__msg {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  white-space: nowrap;
+}
+.announcement-bar__close {
+  position: absolute;
+  right: var(--container-pad);
+  width: 1.5rem; height: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-on-dark-muted);
+}
+.announcement-bar__close svg { width: 0.7rem; height: 0.7rem; }
+
+/* ---- Header ---- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--color-background);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
+}
+.site-header.is-stuck { border-color: var(--color-border); box-shadow: var(--shadow-sm); }
+
+/* Transparent over a full-bleed dark hero; solidifies once scrolled past it. */
+.site-header--overlay {
+  background: transparent;
+  color: var(--color-text-on-dark);
+  position: absolute;
+  top: var(--announcement-height); left: 0; right: 0;
+}
+.site-header--overlay .icon-btn:hover { background: rgba(243, 236, 226, 0.12); }
+.site-header--overlay .site-header__logo span { color: var(--color-text-on-dark-muted); }
+.site-header--overlay.is-stuck {
+  position: sticky;
+  top: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+.site-header--overlay.is-stuck .site-header__logo span { color: var(--color-text-muted); }
+.site-header--overlay.is-stuck .icon-btn:hover { background: var(--color-surface-alt); }
+
+.site-header__row {
+  display: grid;
+  /* minmax(0, 1fr), not a bare 1fr — a bare 1fr track has an implicit
+     min-width of auto, so it refuses to shrink below its content's natural
+     width and the icon group silently pushes past the viewport edge on
+     narrow phones instead of ever actually flexing. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  height: var(--header-height);
+  gap: var(--space-md);
+  transition: height var(--duration-base) var(--ease-standard);
+}
+/* Sticky behavior isn't just a color swap — the whole header condenses a
+   little once you've scrolled, so it visibly "settles" rather than just
+   gaining a background. */
+.site-header.is-stuck .site-header__row { height: calc(var(--header-height) - 0.85rem); }
+
+.site-header__left, .site-header__right { display: flex; align-items: center; gap: var(--space-sm); }
+.site-header__right { justify-content: flex-end; }
+/* Account is already reachable from the mobile nav drawer's footer, so it's
+   dropped from the persistent icon row below desktop — one less fixed-width
+   item competing for the header's narrowest, most contested real estate. */
+.site-header__account { display: none; }
+.site-header__right::before {
+  content: '';
+  width: 1px;
+  height: 1.5rem;
+  background: currentColor;
+  opacity: 0.15;
+  margin-right: var(--space-xs);
+}
+
+.site-header__logo {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+  justify-self: center;
+  position: relative;
+  transition: font-size var(--duration-base) var(--ease-standard);
+}
+.site-header.is-stuck .site-header__logo { font-size: 1.55rem; }
+.site-header__logo span { display: block; font-family: var(--font-body); font-size: 0.55rem; letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; margin-top: 2px; }
+
+.main-nav { display: none; }
+.main-nav__list { display: flex; gap: var(--space-xl); position: relative; }
+.main-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.6rem 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: var(--ls-normal);
+  position: relative;
+}
+.main-nav__num {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.site-header--overlay .main-nav__num { color: var(--color-text-on-dark-muted); }
+.main-nav__link:hover .main-nav__num { color: var(--color-primary); }
+
+/* A single shared indicator slides beneath whichever item is hovered,
+   instead of every link drawing its own independent underline. */
+.main-nav__indicator {
+  position: absolute;
+  left: 0; bottom: 1.15rem;
+  height: 1px;
+  width: 0;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: transform var(--duration-base) var(--ease-out), width var(--duration-base) var(--ease-out), opacity var(--duration-fast) var(--ease-standard);
+  pointer-events: none;
+}
+.main-nav__list:hover .main-nav__indicator { opacity: 1; }
+
+.main-nav__link svg { width: 0.65rem; height: 0.65rem; transition: transform var(--duration-fast); }
+.main-nav__item:hover .main-nav__link svg { transform: rotate(180deg); }
+
+/* Mega menu */
+.mega-menu {
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard), visibility var(--duration-base);
+  z-index: var(--z-header);
+}
+.main-nav__item:hover .mega-menu,
+.main-nav__item:focus-within .mega-menu,
+.main-nav__item.is-open .mega-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.mega-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.2fr;
+  gap: var(--space-2xl);
+  padding-block: var(--space-xl);
+}
+.mega-menu__col-title { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
+.mega-menu__col a { display: block; padding: 0.4rem 0; font-size: var(--fs-sm); }
+.mega-menu__col a:hover { color: var(--color-primary); }
+.mega-menu__feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-alt);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+.mega-menu__feature:hover { transform: translateY(-3px); }
+.mega-menu__feature-media { position: relative; aspect-ratio: 4/3; display: block; }
+.mega-menu__feature-media .ph { width: 100%; height: 100%; }
+.mega-menu__feature .badge { position: absolute; top: var(--space-sm); left: var(--space-sm); }
+.mega-menu__feature-name { font-family: var(--font-display); font-size: var(--fs-md); font-weight: 600; padding: var(--space-sm) var(--space-sm) 0; }
+.mega-menu__feature-price { padding: 0.15rem var(--space-sm) var(--space-sm); display: flex; gap: 0.5rem; align-items: baseline; }
+.mega-menu__feature-price .price-current { font-family: var(--font-display); font-weight: 600; }
+.mega-menu__feature-price .price-compare { color: var(--color-text-muted); text-decoration: line-through; font-size: var(--fs-xs); }
+
+/* ---- Mobile nav drawer ---- */
+.mobile-nav {
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  width: min(22rem, 86vw);
+  background: var(--color-background);
+  z-index: var(--z-drawer);
+  transform: translateX(-100%);
+  transition: transform var(--duration-base) var(--ease-out);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.mobile-nav.is-open { transform: translateX(0); }
+.mobile-nav__head { display: flex; justify-content: space-between; align-items: center; padding: var(--space-md); border-bottom: 1px solid var(--color-border); }
+.mobile-nav__list { padding: var(--space-sm) var(--space-md); }
+.mobile-nav__item { border-bottom: 1px solid var(--color-border); }
+.mobile-nav__link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) 0; font-size: var(--fs-md); font-weight: 500; }
+.mobile-nav__sub { max-height: 0; overflow: hidden; transition: max-height var(--duration-base) var(--ease-standard); }
+.mobile-nav__item.is-open .mobile-nav__sub { max-height: 30rem; }
+.mobile-nav__sub a { display: block; padding: 0.6rem 0 0.6rem var(--space-md); color: var(--color-text-secondary); font-size: var(--fs-sm); }
+.mobile-nav__footer { margin-top: auto; padding: var(--space-lg) var(--space-md); border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-sm); }
+
+/* ---- Search overlay ---- */
+.search-overlay {
+  position: fixed; inset: 0;
+  z-index: var(--z-modal);
+  background: var(--color-background);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-standard), visibility var(--duration-base);
+  overflow-y: auto;
+}
+.search-overlay.is-open { opacity: 1; visibility: visible; }
+.search-overlay__head { border-bottom: 1px solid var(--color-border); padding-block: var(--space-md); }
+.search-overlay__form { display: flex; align-items: center; gap: var(--space-md); }
+.search-overlay__form input { flex: 1; border: none; background: transparent; font-family: var(--font-display); font-size: var(--fs-2xl); }
+.search-overlay__form input:focus { outline: none; }
+.search-overlay__body { padding-block: var(--space-xl); }
+.search-overlay__section-title { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
+.search-suggests { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: var(--space-2xl); }
+.search-results { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+.search-result { display: flex; gap: var(--space-md); align-items: center; }
+.search-result img { width: 4rem; height: 5rem; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-surface-alt); }
+.search-result__title { font-size: var(--fs-sm); font-weight: 600; }
+.search-result__price { font-size: var(--fs-xs); color: var(--color-text-secondary); }
+
+/* ---- Hero ---- */
+.hero {
+  position: relative;
+  min-height: 94vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--color-text-on-dark);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
+}
+.hero__media { position: absolute; inset: 0; z-index: 0; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; }
+.hero__media .ph { justify-content: flex-end; align-items: flex-start; padding: 12% 8% 0 0; }
+.hero__media .ph__icon { width: 34%; max-width: 16rem; opacity: 0.18; }
+.hero__media::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(33,24,18,0.05) 0%, rgba(33,24,18,0.55) 85%);
+}
+.hero__content { position: relative; z-index: 1; padding-bottom: var(--space-3xl); max-width: 54rem; }
+.hero__content .eyebrow { color: var(--color-text-on-dark-muted); }
+.hero h1 { color: var(--color-text-on-dark); margin-top: var(--space-md); }
+[data-word-cycle] {
+  transition: opacity 0.26s var(--ease-standard), transform 0.26s var(--ease-standard), filter 0.26s var(--ease-standard);
+}
+[data-word-cycle].is-swapping { opacity: 0; transform: translateY(0.2em); filter: blur(4px); }
+.hero__cycle { color: var(--color-accent); }
+.hero__lede { color: var(--color-text-on-dark-muted); margin-top: var(--space-lg); max-width: 28rem; font-size: var(--fs-md); line-height: var(--lh-relaxed); }
+.hero__cta { display: flex; gap: var(--space-md); margin-top: var(--space-xl); flex-wrap: wrap; }
+
+/*
+ * Entrance animation is opt-in via JS (.hero.js-anim-ready), not the default
+ * state. If JS never runs (blocked, errors, disabled) or the animation is
+ * interrupted, content stays at its safe default: fully visible, no transform.
+ * Never gate critical text behind an animation that can fail to complete.
+ */
+.hero.js-anim-ready .hero__content > * { animation: hero-rise var(--duration-slow) var(--ease-out) forwards; }
+.hero.js-anim-ready .hero__content .eyebrow { animation-delay: 0.1s; }
+.hero.js-anim-ready .hero h1 { animation-delay: 0.2s; }
+.hero.js-anim-ready .hero__lede { animation-delay: 0.32s; }
+.hero.js-anim-ready .hero__cta { animation-delay: 0.44s; }
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero__scroll-cue {
+  position: absolute; right: var(--container-pad); bottom: var(--space-lg); z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);
+  color: var(--color-text-on-dark-muted); font-size: var(--fs-xs); letter-spacing: var(--ls-wide); text-transform: uppercase;
+}
+.hero__scroll-cue::after { content: ''; width: 1px; height: 2.5rem; background: currentColor; opacity: 0.5; }
+
+/* ---- Marquee ---- */
+.marquee {
+  background: var(--color-text);
+  color: var(--color-text-on-dark);
+  overflow: hidden;
+  padding-block: var(--space-md);
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-inline: var(--space-lg);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  white-space: nowrap;
+}
+.marquee__item::after {
+  content: '✦';
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; overflow-x: auto; }
+}
+
+/* ---- Magnetic buttons ---- */
+.btn--magnetic { transition: transform var(--duration-fast) var(--ease-out), background-color var(--duration-base), color var(--duration-base), border-color var(--duration-base); }
+
+/* ---- Process (horizontal scrollytelling strip) ----
+   Default state needs zero JS: a native horizontal scroll-snap row.
+   JS (.process.is-pinned) upgrades it to a scroll-pinned panel reveal on
+   capable/wide/motion-ok viewports; if that never applies, this fallback
+   is the permanent, fully-functional state — never a broken intermediate. */
+.process {
+  position: relative;
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+}
+.process__sticky {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-2xl);
+}
+/* The 100vh-pin lock is a desktop-only, JS-added enhancement — never the
+   base state. Applying it unconditionally clipped panel content on mobile
+   /tablet (where JS correctly leaves the section unpinned) because static
+   vh units there don't account for mobile browser chrome, and overflow:
+   hidden gave no way to scroll to whatever got cut off. */
+.process.is-pinned .process__sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  min-height: 32rem;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+.process__head { padding-top: var(--space-2xl); flex-shrink: 0; }
+.process__heading { color: var(--color-text-on-dark); margin-top: var(--space-sm); font-size: clamp(2rem, 1.6rem + 3vw, 4rem); }
+
+.process__track {
+  display: flex;
+  gap: var(--space-lg);
+  flex: 1;
+  align-items: center;
+  padding: var(--space-xl) var(--container-pad);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.process__track::-webkit-scrollbar { display: none; }
+.process.is-pinned .process__track { overflow: visible; scroll-snap-type: none; transition: transform 0.05s linear; }
+
+.process__panel {
+  flex: 0 0 min(80vw, 22rem);
+  scroll-snap-align: center;
+  border: 1px solid rgba(243, 236, 226, 0.16);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  height: min(60vh, 26rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(243, 236, 226, 0.03);
+}
+.process__panel--cta { background: var(--color-primary); border-color: var(--color-primary); justify-content: center; align-items: flex-start; gap: var(--space-sm); }
+.process__panel--cta .btn { margin-top: var(--space-md); }
+.process__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  color: var(--color-text-on-dark-muted);
+  margin-bottom: auto;
+}
+.process__panel h3 { color: var(--color-text-on-dark); font-size: var(--fs-2xl); margin-top: var(--space-lg); }
+.process__panel p { color: var(--color-text-on-dark-muted); font-size: var(--fs-sm); margin-top: var(--space-sm); }
+
+/* ---- Trust strip ---- */
+.trust-strip {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.trust-strip__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-block: var(--space-md);
+  overflow-x: auto;
+}
+.trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.trust-strip__item svg { width: 1rem; height: 1rem; color: var(--color-primary); flex-shrink: 0; }
+
+/* ---- Collection discovery (editorial asymmetric grid) ---- */
+.discovery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+.discovery-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  color: var(--color-text-on-dark);
+  aspect-ratio: 5 / 4;
+}
+
+.discovery-card img, .discovery-card .ph { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-standard); }
+.discovery-card:hover img, .discovery-card:hover .ph { transform: scale(1.04); }
+.discovery-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(33,24,18,0) 40%, rgba(33,24,18,0.6) 100%); }
+.discovery-card__text { position: absolute; left: var(--space-lg); bottom: var(--space-lg); right: var(--space-lg); z-index: 1; }
+.discovery-card__text .eyebrow { color: var(--color-text-on-dark-muted); }
+.discovery-card__text h3 { color: var(--color-text-on-dark); margin-top: 0.4rem; }
+.discovery-card__link { margin-top: var(--space-sm); display: inline-flex; align-items: center; gap: 0.4rem; font-size: var(--fs-sm); font-weight: 600; }
+
+.discovery-card__float {
+  position: absolute;
+  top: var(--space-lg); right: var(--space-lg);
+  z-index: 1;
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  transform: rotate(3deg);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+.discovery-card:hover .discovery-card__float { transform: rotate(0deg) scale(1.04); }
+.discovery-card__float strong { display: block; font-family: var(--font-display); font-size: var(--fs-lg); line-height: 1; }
+.discovery-card__float span { display: block; font-size: 0.625rem; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-top: 0.2rem; }
+
+/* ---- Product grid / carousel ---- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg) var(--space-md);
+}
+/* Mobile: an auto-scrolling touch carousel with a peek of the next card.
+   Desktop: a static 4-up grid (see responsive.css) — nothing to scroll,
+   so the rail/carousel behavior only exists where it's actually needed. */
+.product-rail {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: none;
+}
+.product-rail::-webkit-scrollbar { display: none; }
+.product-rail .product-card { min-width: 78vw; max-width: 20rem; scroll-snap-align: start; flex-shrink: 0; }
+
+.section-head__nav { display: flex; gap: var(--space-sm); }
+.section-head__nav button { width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.section-head__nav button:hover { border-color: var(--color-text); }
+.section-head__nav svg { width: 0.9rem; height: 0.9rem; }
+
+/* ---- Statement (editorial philosophy spread) ----
+   Asymmetric spread, not a plain 50/50 media+text split: a narrower tall
+   portrait, a wider content column staggered below it, and a full-width
+   spec-strip footer row — the signature "campaign page" moment of the
+   site, used once, deliberately, for impact. */
+.statement__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+.statement__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  will-change: transform;
+}
+.statement__media .ph { width: 100%; height: 112%; object-fit: cover; }
+.statement__media-caption {
+  position: absolute;
+  left: var(--space-md); bottom: var(--space-md);
+  color: var(--color-text-on-dark);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+}
+
+.statement__content .eyebrow { margin-bottom: var(--space-md); }
+
+.statement__headline {
+  font-size: clamp(2.5rem, 1.9rem + 3.2vw, 4.75rem);
+  line-height: 0.98;
+  color: var(--color-text);
+}
+.statement__line { display: block; }
+.statement__line > span { display: block; }
+.statement__line--accent > span { color: var(--color-primary); }
+/* The mask/slide-up effect is entirely opt-in via JS (.js-mask, added at
+   DOMContentLoaded). Without it — or if the reveal never fires — the
+   headline is just normal, fully visible text. Never gate this on JS. */
+.statement__headline.js-mask .statement__line { overflow: hidden; }
+.statement__headline.js-mask .statement__line > span {
+  transform: translateY(105%);
+  transition: transform 0.85s var(--ease-out);
+}
+.statement__headline.js-mask.is-revealed .statement__line:nth-child(1) > span { transition-delay: 0.05s; }
+.statement__headline.js-mask.is-revealed .statement__line:nth-child(2) > span { transition-delay: 0.16s; }
+.statement__headline.js-mask.is-revealed .statement__line:nth-child(3) > span { transition-delay: 0.27s; }
+.statement__headline.js-mask.is-revealed .statement__line > span { transform: translateY(0); }
+
+.statement__lede { margin-top: var(--space-lg); max-width: 28rem; }
+
+/* Full-width spec strip beneath the spread — three bold indexed facts,
+   read like a masthead footer rather than a plain bulleted list. */
+.statement__facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  margin-top: var(--space-lg);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.statement__fact {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface-alt);
+  transition: background-color var(--duration-base) var(--ease-standard), padding-left var(--duration-base) var(--ease-standard);
+}
+.statement__fact:hover { background: var(--color-surface); padding-left: calc(var(--space-lg) + 0.4rem); }
+.statement__fact-index {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.statement__fact-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* ---- Anatomy of a Scent (interactive timeline + editorial note cards) ----
+   Every note's full text — label, name, description, ingredient chips — is
+   present and visible in the base markup; nothing is gated behind JS or
+   hover the way the old click-to-expand accordion tiers were. The timeline
+   ↔ card highlight sync below is a layered enhancement on top of content
+   that already reads fine without it. */
+.scent-timeline { max-width: 30rem; margin: var(--space-xl) auto; }
+.scent-timeline__track {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 0.35rem;
+}
+.scent-timeline__track::before {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  top: 0.35rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-success), var(--color-primary), var(--color-secondary));
+  opacity: 0.4;
+}
+.scent-timeline__stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-body);
+}
+.scent-timeline__dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--color-border);
+  box-shadow: 0 0 0 3px var(--color-background);
+  transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-standard);
+}
+.scent-timeline__stop:nth-child(1) .scent-timeline__dot { background: var(--color-success); }
+.scent-timeline__stop:nth-child(2) .scent-timeline__dot { background: var(--color-primary); }
+.scent-timeline__stop:nth-child(3) .scent-timeline__dot { background: var(--color-secondary); }
+.scent-timeline__stop.is-active .scent-timeline__dot { transform: scale(1.7); box-shadow: 0 0 0 4px var(--color-surface-alt); }
+.scent-timeline__time { font-size: var(--fs-xs); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); transition: color var(--duration-base); }
+.scent-timeline__stop.is-active .scent-timeline__time { color: var(--color-text); font-weight: 600; }
+
+.scent-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-2xl); }
+.scent-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  background: var(--color-surface);
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+  cursor: pointer;
+}
+.scent-card--top { --tint: var(--color-success); }
+.scent-card--heart { --tint: var(--color-primary); }
+.scent-card--base { --tint: var(--color-secondary); }
+.scent-card:hover, .scent-card.is-active { transform: translateY(-0.4rem); border-color: var(--tint); box-shadow: var(--shadow-md); }
+.scent-card__index {
+  position: absolute;
+  top: -1rem;
+  right: -0.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 3.5rem + 4vw, 7rem);
+  line-height: 1;
+  color: var(--tint);
+  opacity: 0.1;
+  transition: opacity var(--duration-base);
+  pointer-events: none;
+}
+.scent-card:hover .scent-card__index, .scent-card.is-active .scent-card__index { opacity: 0.18; }
+.scent-card__label { position: relative; display: block; font-size: var(--fs-xs); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--tint); font-weight: 600; }
+.scent-card__name { position: relative; font-family: var(--font-display); font-size: var(--fs-xl); margin-top: 0.4rem; }
+.scent-card__desc { position: relative; font-size: var(--fs-sm); color: var(--color-text-secondary); margin-top: var(--space-sm); max-width: 26rem; }
+.scent-card__notes { position: relative; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: var(--space-md); }
+.scent-card__notes span { font-size: var(--fs-xs); padding: 0.25rem 0.6rem; border: 1px solid var(--color-border); border-radius: var(--radius-pill); color: var(--color-text-secondary); background: var(--color-background); transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard); }
+.scent-card:hover .scent-card__notes span, .scent-card.is-active .scent-card__notes span { border-color: var(--tint); color: var(--color-text); }
+
+/* ---- Notes / fragrance-family finder ---- */
+.notes-finder__chips { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+/* ---- Brand story ---- */
+.brand-story {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+.brand-story__media { position: relative; aspect-ratio: 3/4; border-radius: var(--radius-md); overflow: hidden; }
+.brand-story__media img, .brand-story__media .ph { width: 100%; height: 100%; object-fit: cover; }
+.brand-story__badge {
+  position: absolute; bottom: var(--space-lg); left: var(--space-lg);
+  background: var(--color-background);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  max-width: 14rem;
+}
+.brand-story__badge strong { display: block; font-family: var(--font-display); font-size: var(--fs-lg); }
+.brand-story__text .eyebrow { margin-bottom: var(--space-md); }
+.brand-story__numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border); }
+.brand-story__numbers strong { display: block; font-family: var(--font-display); font-size: var(--fs-xl); }
+.brand-story__numbers span { font-size: var(--fs-xs); color: var(--color-text-muted); letter-spacing: var(--ls-wide); text-transform: uppercase; }
+
+/* ---- Values (hover-spotlight editorial list — deliberately not an icon grid) ---- */
+.values { background: var(--color-surface-alt); }
+.values__layout { display: grid; gap: var(--space-xl); }
+.values__intro { position: relative; }
+.values__intro .section-numeral { top: -1.5rem; left: -0.5rem; }
+.values__intro h2 { margin-top: var(--space-md); font-size: clamp(2.5rem, 2rem + 2.5vw, 4rem); overflow-wrap: break-word; }
+.values__intro .lede { margin-top: var(--space-md); }
+.values-list { border-top: 1px solid var(--color-border); }
+.values-list__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: var(--space-md) var(--space-lg);
+  padding-block: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.values-list:hover .values-list__item:not(:hover),
+.values-list.has-active .values-list__item:not(.is-active):not(:hover) { opacity: 0.4; }
+.values-list__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+.values-list__item:hover .values-list__index,
+.values-list__item.is-active .values-list__index { color: var(--color-primary); }
+.values-list__title {
+  font-size: var(--fs-2xl);
+  transition: transform var(--duration-base) var(--ease-out);
+  transform-origin: left center;
+}
+.values-list__item:hover .values-list__title,
+.values-list__item.is-active .values-list__title { transform: translateX(0.4rem); }
+.values-list__desc {
+  grid-column: 2;
+  max-width: 30rem;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-sm);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard), margin-top var(--duration-base) var(--ease-standard);
+}
+.values-list__item:hover .values-list__desc,
+.values-list__item.is-active .values-list__desc { max-height: 5rem; opacity: 1; margin-top: 0.35rem; }
+@media (hover: none) {
+  .values-list__desc { max-height: 5rem; opacity: 1; margin-top: 0.35rem; }
+  .values-list:hover .values-list__item:not(:hover) { opacity: 1; }
+}
+
+/* ---- Testimonials (editorial spotlight + layered switcher deck) ----
+   The spotlight always shows one complete, correctly-formatted testimonial
+   even with zero JS (its state lives in the HTML, not added by script).
+   Every other testimonial's name + quote preview is also already visible in
+   its own deck card — nothing is hidden behind JS, only which one is
+   "featured" changes on click. */
+.testimonials { background: var(--color-surface-dark); color: var(--color-text-on-dark); }
+.testimonials .eyebrow { color: var(--color-text-on-dark-muted); }
+/* h1–h4 always set their own color globally (see typography.css), which
+   beats anything merely inherited from .testimonials — so the section
+   heading needs its own explicit override here, same as every other
+   dark section on the page (.process__panel h3, .footer, etc). Without
+   this it renders near-invisible dark-on-dark. */
+.testimonials .section-head h2 { color: var(--color-text-on-dark); }
+.testimonials__rating { display: flex; align-items: center; gap: var(--space-md); flex-shrink: 0; }
+.testimonials__rating strong { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-text-on-dark); }
+.testimonials__rating .rating__stars { color: var(--color-accent); }
+
+.testimonial-spotlight { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2xl); margin-top: var(--space-lg); }
+.testimonial-spotlight__mark {
+  position: absolute;
+  top: -3rem; left: -0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 6rem + 10vw, 13rem);
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+.testimonial-spotlight__quote { position: relative; z-index: 1; }
+.testimonial-spotlight__quote .rating__stars { color: var(--color-accent); letter-spacing: 0.2em; }
+.testimonial-spotlight__quote blockquote {
+  margin: var(--space-md) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 1.25rem + 2vw, 2.75rem);
+  line-height: var(--lh-snug);
+  color: var(--color-text-on-dark);
+  max-width: 34rem;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.testimonial-spotlight__quote.is-swapping blockquote,
+.testimonial-spotlight__quote.is-swapping figcaption { opacity: 0; }
+.testimonial-spotlight__quote figcaption {
+  margin-top: var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.testimonial-spotlight__avatar {
+  width: 3.25rem; height: 3.25rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  background: var(--tint, var(--color-primary));
+  color: var(--color-surface-dark);
+}
+.testimonial-spotlight__id { display: flex; flex-direction: column; margin-right: auto; }
+.testimonial-spotlight__name { font-weight: 600; color: var(--color-text-on-dark); }
+.testimonial-spotlight__loc { font-size: var(--fs-xs); color: var(--color-text-on-dark-muted); }
+.testimonial-card__verified { display: inline-flex; align-items: center; gap: 0.3rem; font-size: var(--fs-xs); color: var(--color-text-on-dark-muted); }
+.testimonial-card__verified svg { width: 0.75rem; height: 0.75rem; color: var(--color-success); }
+
+/* Fanned "card deck" switcher — slightly rotated, overlapping stack that
+   straightens and lifts forward on hover/active, like a hand of cards. */
+.testimonial-deck { position: relative; display: flex; flex-direction: column; padding-top: var(--space-sm); }
+.testimonial-deck__card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 0;
+  text-align: left;
+  background: rgba(243, 236, 226, 0.05);
+  border: 1px solid rgba(243, 236, 226, 0.14);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+}
+.testimonial-deck__card + .testimonial-deck__card { margin-top: -0.6rem; }
+.testimonial-deck__card:nth-child(1) { transform: rotate(-1.25deg); }
+.testimonial-deck__card:nth-child(2) { transform: rotate(1deg); }
+.testimonial-deck__card:nth-child(3) { transform: rotate(-0.5deg); }
+.testimonial-deck__card:hover, .testimonial-deck__card.is-active {
+  transform: translateX(0.5rem) rotate(0deg);
+  z-index: 1;
+  border-color: var(--tint);
+  background: rgba(243, 236, 226, 0.1);
+  box-shadow: var(--shadow-md);
+}
+.testimonial-deck__avatar {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  background: var(--tint, var(--color-primary));
+  color: var(--color-surface-dark);
+}
+.testimonial-deck__body { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; gap: 0.15rem; }
+.testimonial-deck__name { font-size: var(--fs-xs); font-weight: 600; color: var(--color-text-on-dark); }
+.testimonial-deck__quote { font-size: var(--fs-xs); color: var(--color-text-on-dark-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- UGC gallery (asymmetric bento, not a uniform square grid) ---- */
+.ugc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+.ugc-grid a { position: relative; aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden; }
+.ugc-grid__feature { grid-column: span 2; aspect-ratio: 16 / 9; }
+.ugc-grid img, .ugc-grid .ph { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-base) var(--ease-standard); }
+.ugc-grid a:hover img, .ugc-grid a:hover .ph { transform: scale(1.05); }
+
+/* ---- Newsletter ---- (compact by design — this is a footer-adjacent
+   capture moment, not a full editorial section, so it shouldn't compete
+   for scroll time the way the hero or statement sections do) */
+.newsletter {
+  background: var(--color-primary);
+  color: var(--color-text-on-dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 2rem + 2vw, 3.25rem);
+}
+.newsletter::before, .newsletter::after {
+  content: '✦';
+  position: absolute;
+  color: rgba(243, 236, 226, 0.15);
+  font-size: 2.25rem;
+}
+.newsletter::before { top: 12%; left: 6%; }
+.newsletter::after { bottom: 14%; right: 7%; }
+.newsletter h2 { color: var(--color-text-on-dark); font-size: clamp(1.75rem, 1.5rem + 1.4vw, 2.5rem); }
+.newsletter .lede { color: rgba(243, 236, 226, 0.85); margin-inline: auto; margin-top: var(--space-sm); font-size: var(--fs-sm); }
+.newsletter form { max-width: 24rem; margin: var(--space-lg) auto 0; }
+.newsletter .input-inline { background: rgba(243, 236, 226, 0.1); border-color: rgba(243, 236, 226, 0.35); }
+.newsletter .input-inline input { color: var(--color-text-on-dark); }
+.newsletter .input-inline input::placeholder { color: rgba(243, 236, 226, 0.6); }
+.newsletter__privacy { margin-top: var(--space-sm); font-size: var(--fs-xs); color: rgba(243, 236, 226, 0.7); }
+
+/* ---- Footer ---- */
+.site-footer { background: var(--color-surface-dark); color: var(--color-text-on-dark-muted); overflow: hidden; }
+
+.footer__mark {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-block: var(--space-2xl) var(--space-lg);
+  border-bottom: 1px solid rgba(184,171,153,0.2);
+}
+.footer__mark-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3.5rem, 2rem + 9vw, 9rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--color-text-on-dark);
+}
+.footer__mark-cta { align-self: flex-start; }
+
+.footer__top { display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); padding-block: var(--space-2xl) var(--space-xl); }
+.footer__brand p { max-width: 20rem; font-size: var(--fs-sm); }
+.footer__social { display: flex; gap: var(--space-sm); margin-top: var(--space-lg); }
+.footer__social a { width: 2.25rem; height: 2.25rem; border: 1px solid rgba(184,171,153,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.footer__social svg { width: 1rem; height: 1rem; }
+.footer__cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); }
+.footer__col-title { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-on-dark); margin-bottom: var(--space-md); }
+.footer__col a { display: block; padding: 0.4rem 0; font-size: var(--fs-sm); }
+.footer__col a:hover { color: var(--color-text-on-dark); }
+.footer__bottom { border-top: 1px solid rgba(184,171,153,0.2); padding-block: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md); font-size: var(--fs-xs); }
+.footer__payments { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.footer__payments span { border: 1px solid rgba(184,171,153,0.3); border-radius: var(--radius-sm); padding: 0.3rem 0.55rem; font-size: 0.625rem; letter-spacing: var(--ls-wide); }
+.footer__legal { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* ---- WhatsApp float ---- */
+.whatsapp-fab {
+  position: fixed;
+  right: var(--space-lg); bottom: var(--space-lg);
+  z-index: var(--z-toast);
+  width: 3.25rem; height: 3.25rem;
+  border-radius: 50%;
+  background: #2fab5e;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+.whatsapp-fab:hover { transform: scale(1.06); }
+.whatsapp-fab svg { width: 1.6rem; height: 1.6rem; }

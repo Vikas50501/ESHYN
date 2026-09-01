@@ -1,0 +1,112 @@
+/* ==========================================================================
+   ESHYN — Typography
+   Display: Clash Display (bold geometric grotesque, big personality)
+   Body:    General Sans (clean grotesque, wired for numerals/UI)
+   ========================================================================== */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4,
+.h1, .h2, .h3, .h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+}
+
+h1, .h1 { font-size: var(--fs-4xl); letter-spacing: -0.04em; }
+h2, .h2 { font-size: var(--fs-3xl); letter-spacing: -0.035em; }
+h3, .h3 { font-size: var(--fs-2xl); }
+h4, .h4 { font-size: var(--fs-xl); font-family: var(--font-body); font-weight: 600; letter-spacing: var(--ls-normal); }
+
+/* Oversized watermark numerals used behind a few section headers */
+.section-numeral {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(8rem, 6rem + 12vw, 20rem);
+  line-height: 1;
+  color: var(--color-text);
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+  letter-spacing: -0.05em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.lede {
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 38rem;
+}
+
+p { line-height: var(--lh-relaxed); }
+
+p + p { margin-top: var(--space-md); }
+
+small, .text-sm { font-size: var(--fs-sm); }
+.text-xs { font-size: var(--fs-xs); }
+
+.text-muted { color: var(--color-text-muted); }
+.text-secondary { color: var(--color-text-secondary); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+a.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+a.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -0.15em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+a.link-underline:hover::after,
+a.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Tabular numerals for prices anywhere they appear */
+.price, .num {
+  font-variant-numeric: tabular-nums;
+}

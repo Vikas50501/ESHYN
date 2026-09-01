@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "eshyn-theme",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["devserver.py", "8433"],
+      "port": 8433
+    }
+  ]
+}

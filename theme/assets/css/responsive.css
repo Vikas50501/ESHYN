@@ -1,0 +1,99 @@
+/* ==========================================================================
+   ESHYN — Responsive overrides
+   Mobile-first base lives in components.css / sections.css.
+   Breakpoints: 480 / 768 / 1024 / 1280 / 1440
+   ========================================================================== */
+
+/* ---- ≥480px : large phones ---- */
+@media (min-width: 30rem) {
+  .search-results { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- ≥768px : tablet ---- */
+@media (min-width: 48rem) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .statement__grid { grid-template-columns: 2fr 3fr; gap: var(--space-2xl); align-items: center; }
+  .statement__facts { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); gap: 1px; }
+  .statement__fact:hover { padding-left: var(--space-lg); padding-top: calc(var(--space-md) + 0.3rem); }
+  .values__layout { grid-template-columns: minmax(16rem, 22rem) 1fr; gap: var(--space-3xl); align-items: start; }
+  .values__intro { position: sticky; top: calc(var(--header-height) + 2rem); }
+  .scent-grid { grid-template-columns: repeat(3, 1fr); }
+  .testimonial-spotlight { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: var(--space-3xl); }
+  .brand-story { grid-template-columns: 1fr 1fr; gap: var(--space-2xl); }
+  .brand-story__numbers { grid-template-columns: repeat(3, 1fr); }
+  .footer__top { grid-template-columns: 1.2fr 2fr; }
+  .footer__mark { flex-direction: row; align-items: center; justify-content: space-between; }
+  .footer__cols { grid-template-columns: repeat(4, 1fr); }
+  .ugc-grid { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+  .ugc-grid__feature { grid-column: 1 / 3; grid-row: 1 / 3; aspect-ratio: auto; }
+  .ugc-grid a:not(.ugc-grid__feature) { aspect-ratio: 1; }
+  .hero { min-height: 88vh; }
+  .footer__legal { flex-direction: row; }
+  .cart-drawer { width: min(26rem, 60vw); }
+}
+
+/* ---- ≥1024px : desktop ---- */
+@media (min-width: 64rem) {
+  .main-nav { display: block; }
+  .mobile-nav-toggle, .mobile-nav, .mobile-nav__backdrop { display: none; }
+
+  .site-header__row { grid-template-columns: auto 1fr auto; gap: var(--space-lg); }
+  .site-header__account { display: inline-flex; }
+  .site-header__logo { justify-self: start; text-align: left; grid-column: 1; order: -1; }
+  .main-nav { grid-column: 2; justify-self: center; }
+
+  .hero { min-height: 94vh; }
+  .hero__content { max-width: 58rem; }
+
+  .discovery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: var(--space-md); height: 40rem; }
+  .discovery-card { aspect-ratio: auto; }
+  .discovery-card:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .discovery-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .discovery-card:nth-child(3) { grid-column: 2; grid-row: 2; }
+
+  .product-grid { grid-template-columns: repeat(4, 1fr); }
+  /* Exactly 4-up, no scrolling — the rail becomes a static grid at desktop. */
+  .product-rail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+  .product-rail .product-card { min-width: 0; max-width: none; }
+  .section-head__nav { display: none; }
+
+  .values-list__item { grid-template-columns: 5rem 1fr auto; align-items: center; column-gap: var(--space-xl); }
+  .values-list__desc { grid-column: 3; grid-row: 1; max-width: 22rem; text-align: right; margin-top: 0 !important; }
+
+  .section-head { align-items: flex-end; }
+
+  .scent-timeline { max-width: 40rem; }
+  .scent-grid { grid-template-columns: 1fr 1.15fr 1fr; gap: var(--space-lg); align-items: center; }
+  .scent-card--heart { padding-top: var(--space-2xl); transform: translateY(-1.25rem); z-index: 1; box-shadow: var(--shadow-sm); }
+  .scent-card--heart:hover, .scent-card--heart.is-active { transform: translateY(-1.75rem); }
+}
+
+/* ---- ≥80rem (1280px) ---- */
+@media (min-width: 80rem) {
+  .brand-story { grid-template-columns: 5fr 6fr; }
+}
+
+/* ---- Reduce hero image parallax-y stuff and tighten spacing below 400px ---- */
+@media (max-width: 22.5rem) {
+  :root { --container-pad: 1rem; }
+  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__cta .btn { width: 100%; }
+  /* On the smallest phones even the trimmed 3-icon row + logo can get
+     tight, so shave a bit more off the two items that have room to give —
+     the row's own gap and the logo's font-size — rather than let anything
+     get pushed toward the edge again. */
+  .site-header__row { gap: var(--space-sm); }
+  .site-header__logo { font-size: 1.5rem; }
+  .site-header__left .icon-btn, .site-header__right .icon-btn { width: 2.25rem; height: 2.25rem; }
+}
+
+/* ---- Landscape phones: shrink hero so CTA is reachable ---- */
+@media (max-height: 30rem) and (orientation: landscape) {
+  .hero { min-height: 100vh; }
+}
