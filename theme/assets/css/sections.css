@@ -534,7 +534,7 @@ section { position: relative; }
 .statement__content .eyebrow { margin-bottom: var(--space-md); }
 
 .statement__headline {
-  font-size: clamp(2.5rem, 1.9rem + 3.2vw, 4.75rem);
+  font-size: clamp(2.1rem, 1.65rem + 2.6vw, 3.9rem);
   line-height: 0.98;
   color: var(--color-text);
 }
