@@ -79,7 +79,7 @@
         </div>
         <div class="product-card__body">
           <span class="product-card__brand">${product.vendor}</span>
-          <h3 class="product-card__title"><a href="/products/${product.handle}">${product.title}</a></h3>
+          <h3 class="product-card__title"><a href="product.html?handle=${product.handle}">${product.title}</a></h3>
           ${ratingHtml}
           <div class="product-card__price price">${priceHtml}</div>
         </div>
@@ -189,7 +189,7 @@
     const icon = product.type === 'Gift Set' ? 'gift' : 'bottle';
     quickAdd.root.querySelector('[data-qa-image]').innerHTML = window.esPlaceholder(product.media[0], product.title, icon);
     quickAdd.root.querySelector('[data-qa-title]').textContent = product.title;
-    quickAdd.root.querySelector('[data-qa-title]').setAttribute('href', `/products/${product.handle}`);
+    quickAdd.root.querySelector('[data-qa-title]').setAttribute('href', `product.html?handle=${product.handle}`);
 
     qaRenderOptions();
     qaRenderPriceAndStock();

@@ -71,6 +71,63 @@ section { position: relative; }
 }
 .collection-toolbar__meta .filter-select select:focus { outline: none; }
 
+/* ---- Breadcrumb (shared with the collection page's own crumb style) ---- */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+.breadcrumb a:hover { color: var(--color-primary); }
+
+/* ---- Product page ---- */
+/* minmax(0, 1fr), not a bare 1fr — see the identical fix on
+   .testimonial-spotlight. A bare 1fr track won't shrink below its
+   content's natural width, and the trust-strip row's nowrap items are
+   wide enough to blow the column out past the viewport on narrow phones. */
+.product-hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+.product-gallery__main { aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden; }
+.product-gallery__thumbs { display: flex; gap: 0.6rem; margin-top: var(--space-sm); }
+.product-gallery__thumb {
+  width: 4rem; height: 5rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast), border-color var(--duration-fast);
+}
+.product-gallery__thumb:hover { opacity: 0.85; }
+.product-gallery__thumb.is-active { opacity: 1; border-color: var(--color-text); }
+
+.product-info__vendor { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.product-info h1 { margin-top: 0.3rem; font-size: var(--fs-2xl); }
+.product-info .rating { margin-top: var(--space-sm); }
+.product-info__badges { display: flex; gap: 0.4rem; margin-top: var(--space-sm); }
+.product-info .price { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-xl); }
+.product-info .price .price-compare { font-size: var(--fs-md); margin-left: var(--space-sm); }
+.product-info__desc { margin-top: var(--space-md); color: var(--color-text-secondary); }
+.product-info__options { margin-top: var(--space-lg); }
+.product-info__actions { display: flex; gap: var(--space-md); align-items: center; margin-top: var(--space-lg); }
+.product-info__actions .qty-stepper { flex-shrink: 0; }
+.product-info__actions .btn { flex: 1; }
+/* Unlike .product-card__wishlist (absolutely positioned to float in a
+   card's corner), this sits inline in a flex row next to Add to Cart. */
+.product-info__wishlist { border: 1px solid var(--color-border); flex-shrink: 0; }
+.product-info__wishlist svg { width: 1.1rem; height: 1.1rem; stroke: currentColor; fill: none; transition: fill var(--duration-fast), stroke var(--duration-fast); }
+.product-info__wishlist.is-active svg { fill: var(--color-primary); stroke: var(--color-primary); }
+.product-info .stock-message { margin-top: var(--space-sm); }
+.product-info .trust-strip { margin-top: var(--space-xl); border-top: 1px solid var(--color-border); }
+.product-info .trust-strip__row { justify-content: flex-start; padding-inline: 0; }
+
+.product-accordions { max-width: 44rem; margin-top: var(--space-2xl); }
+
 /* ---- Announcement bar ---- */
 .announcement-bar {
   background: var(--color-surface-dark);

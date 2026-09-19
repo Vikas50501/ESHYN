@@ -31,6 +31,7 @@
   .hero { min-height: 88vh; }
   .footer__legal { flex-direction: row; }
   .cart-drawer { width: min(26rem, 60vw); }
+  .product-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); align-items: start; }
 }
 
 /* ---- ≥1024px : desktop ---- */
