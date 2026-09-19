@@ -5,16 +5,32 @@
    ========================================================================== */
 
 :root {
-  /* ---- Color: brand ---- */
-  --color-primary: #a8552e;        /* terracotta amber — CTAs, accents */
-  --color-primary-dark: #7e3d1f;
+  /* ---- Color: brand ----
+     Primary is now the logo's own deep bronze-gold rather than terracotta —
+     picked specifically because it holds ~4.8:1 contrast against the
+     near-white text used on buttons everywhere (the brighter mid-gold
+     below only clears ~2.4:1, too low for text). Every button, hover
+     state, and active/selected treatment on the site reads off this one
+     token, so this single change is what makes "gold" the brand color. */
+  --color-primary: #8a5e14;        /* deep bronze-gold — CTAs, accents */
+  --color-primary-dark: #6b480f;
   --color-secondary: #6b6045;      /* muted olive-gold — secondary accents */
-  --color-accent: #c99a5b;         /* warm gold — badges, dividers, stars */
 
-  /* ---- Color: neutrals ---- */
-  --color-background: #faf6f0;     /* warm ivory */
+  /* Metallic gold system, keyed to the logo's gradient (deep bronze →
+     mid gold → pale butter highlight). --color-accent is the workhorse —
+     it already drives badges/dividers/stars everywhere, so richening it
+     here upgrades those sitewide without touching every call site. */
+  --color-accent: #c2911f;         /* rich mid gold — badges, dividers, stars */
+  --color-gold-deep: #8a5e14;       /* bronze shadow tone, same as --color-primary */
+  --color-gold-light: #f2d896;      /* pale highlight tone */
+  --gradient-gold: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-accent) 50%, var(--color-gold-deep) 100%);
+
+  /* ---- Color: neutrals ----
+     Warmed a touch further toward gold/amber (less pink) to sit better
+     alongside the new primary. */
+  --color-background: #fbf6e9;     /* warm ivory, golden undertone */
   --color-surface: #ffffff;
-  --color-surface-alt: #f1e6d9;    /* blush sand */
+  --color-surface-alt: #f5ecd2;    /* golden sand */
   --color-surface-dark: #211812;   /* near-black espresso, footer/inverse */
 
   --color-text: #251b14;
@@ -35,6 +51,10 @@
   /* ---- Typography ---- */
   --font-display: 'Clash Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Elegant serif echo of the logo's flourished script monogram — used
+     sparingly for brand moments (quotes, ornamental kickers), never for
+     body copy or UI text, so legibility never suffers. */
+  --font-accent: 'Cormorant Garamond', 'Times New Roman', serif;
 
   --fs-xs: 0.75rem;
   --fs-sm: 0.8125rem;
@@ -91,7 +111,7 @@
   --duration-slow: 480ms;
 
   /* ---- Layout ---- */
-  --header-height: 4.5rem;
+  --header-height: 4.75rem;
   --announcement-height: 2.5rem;
   --z-header: 100;
   --z-overlay: 200;
@@ -102,6 +122,6 @@
 
 @media (max-width: 48rem) {
   :root {
-    --header-height: 3.75rem;
+    --header-height: 4.25rem;
   }
 }

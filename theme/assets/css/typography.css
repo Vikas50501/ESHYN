@@ -32,13 +32,15 @@ h4, .h4 { font-size: var(--fs-xl); font-family: var(--font-body); font-weight: 6
   font-weight: 600;
   font-size: clamp(8rem, 6rem + 12vw, 20rem);
   line-height: 1;
-  color: var(--color-text);
-  opacity: 0.035;
+  color: var(--color-accent);
+  opacity: 0.05;
   pointer-events: none;
   user-select: none;
   z-index: -1;
   letter-spacing: -0.05em;
 }
+
+.font-accent { font-family: var(--font-accent); font-style: italic; }
 
 .eyebrow {
   display: inline-flex;
@@ -55,8 +57,17 @@ h4, .h4 { font-size: var(--fs-xl); font-family: var(--font-body); font-weight: 6
 .eyebrow::before {
   content: '';
   width: 1.5rem;
-  height: 1px;
-  background: currentColor;
+  height: 2px;
+  background: var(--gradient-gold);
+  border-radius: var(--radius-pill);
+}
+.eyebrow::after {
+  content: '';
+  width: 0.3rem;
+  height: 0.3rem;
+  background: var(--color-accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
 .lede {

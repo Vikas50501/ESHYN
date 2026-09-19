@@ -10,6 +10,7 @@ section { position: relative; }
 .section--alt { background: var(--color-surface-alt); }
 .section-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-lg);
@@ -95,11 +96,14 @@ section { position: relative; }
 .site-header.is-stuck .site-header__row { height: calc(var(--header-height) - 0.85rem); }
 
 .site-header__left, .site-header__right { display: flex; align-items: center; gap: var(--space-sm); }
+.site-header__left { justify-content: flex-start; }
 .site-header__right { justify-content: flex-end; }
-/* Account is already reachable from the mobile nav drawer's footer, so it's
-   dropped from the persistent icon row below desktop — one less fixed-width
-   item competing for the header's narrowest, most contested real estate. */
-.site-header__account { display: none; }
+/* Search, Account, and Wishlist all move into the mobile nav drawer below
+   desktop — the persistent mobile header row keeps only the hamburger,
+   logo, and cart, its narrowest, most contested real estate. */
+.site-header__search,
+.site-header__account,
+.site-header__wishlist { display: none; }
 .site-header__right::before {
   content: '';
   width: 1px;
@@ -110,6 +114,9 @@ section { position: relative; }
 }
 
 .site-header__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-display);
   font-size: 1.85rem;
   font-weight: 600;
@@ -120,7 +127,13 @@ section { position: relative; }
   transition: font-size var(--duration-base) var(--ease-standard);
 }
 .site-header.is-stuck .site-header__logo { font-size: 1.55rem; }
-.site-header__logo span { display: block; font-family: var(--font-body); font-size: 0.55rem; letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; margin-top: 2px; }
+.site-header__logo-mark {
+  width: 1.9em;
+  height: 1.9em;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 3px rgba(37, 27, 20, 0.18));
+}
 
 .main-nav { display: none; }
 .main-nav__list { display: flex; gap: var(--space-xl); position: relative; }
@@ -134,15 +147,6 @@ section { position: relative; }
   letter-spacing: var(--ls-normal);
   position: relative;
 }
-.main-nav__num {
-  font-family: var(--font-display);
-  font-size: 0.6875rem;
-  color: var(--color-text-muted);
-  transition: color var(--duration-fast) var(--ease-standard);
-}
-.site-header--overlay .main-nav__num { color: var(--color-text-on-dark-muted); }
-.main-nav__link:hover .main-nav__num { color: var(--color-primary); }
-
 /* A single shared indicator slides beneath whichever item is hovered,
    instead of every link drawing its own independent underline. */
 .main-nav__indicator {
@@ -163,7 +167,13 @@ section { position: relative; }
 /* Mega menu */
 .mega-menu {
   position: absolute;
-  left: 0; right: 0; top: 100%;
+  /* .main-nav is now centered via position:absolute (see responsive.css),
+     which makes it the mega menu's containing block instead of the
+     full-bleed .site-header — left:0/right:0 would confine the mega menu
+     to just the nav's own narrow width. Breaking out to 100vw centered on
+     the viewport restores the intended full-bleed panel regardless. */
+  left: 50%; top: 100%;
+  width: 100vw;
   background: var(--color-surface);
   color: var(--color-text);
   border-top: 1px solid var(--color-border);
@@ -171,13 +181,13 @@ section { position: relative; }
   box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-6px);
+  transform: translateX(-50%) translateY(-6px);
   transition: opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard), visibility var(--duration-base);
   z-index: var(--z-header);
 }
 .main-nav__item:hover .mega-menu,
 .main-nav__item:focus-within .mega-menu,
-.main-nav__item.is-open .mega-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.main-nav__item.is-open .mega-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
 .mega-menu__grid {
   display: grid;
@@ -221,9 +231,35 @@ section { position: relative; }
 }
 .mobile-nav.is-open { transform: translateX(0); }
 .mobile-nav__head { display: flex; justify-content: space-between; align-items: center; padding: var(--space-md); border-bottom: 1px solid var(--color-border); }
+/* Search + Wishlist live here instead of the mobile header row — same
+   destinations as their desktop icon-btn counterparts, just laid out as
+   labelled rows since there's room to spare inside the drawer. */
+.mobile-nav__actions { display: flex; border-bottom: 1px solid var(--color-border); }
+.mobile-nav__action {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: var(--space-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+.mobile-nav__action + .mobile-nav__action { border-left: 1px solid var(--color-border); }
+.mobile-nav__action svg { width: 1.1rem; height: 1.1rem; stroke: currentColor; fill: none; flex-shrink: 0; }
+.mobile-nav__action .icon-btn__count { position: static; margin-left: -0.2rem; }
 .mobile-nav__list { padding: var(--space-sm) var(--space-md); }
 .mobile-nav__item { border-bottom: 1px solid var(--color-border); }
 .mobile-nav__link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) 0; font-size: var(--fs-md); font-weight: 500; }
+/* The "Shop" row carries a trailing chevron the others don't, so its number
+   + label live inside one wrapper span instead of being direct flex
+   children of .mobile-nav__link — without this, justify-content:
+   space-between only pushes that whole wrapper away from the chevron,
+   leaving the number and label stuck together at the left instead of
+   matching the number-left / label-right rhythm every other row has. */
+.mobile-nav__link-label { display: flex; justify-content: space-between; align-items: center; flex: 1; }
 .mobile-nav__sub { max-height: 0; overflow: hidden; transition: max-height var(--duration-base) var(--ease-standard); }
 .mobile-nav__item.is-open .mobile-nav__sub { max-height: 30rem; }
 .mobile-nav__sub a { display: block; padding: 0.6rem 0 0.6rem var(--space-md); color: var(--color-text-secondary); font-size: var(--fs-sm); }
@@ -269,7 +305,12 @@ section { position: relative; }
 .hero__media::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(33,24,18,0.05) 0%, rgba(33,24,18,0.55) 85%);
+  /* A faint radial gold glow, top-right, echoes the logo's radial medallion
+     symmetry without reading as a literal shape — layered under the same
+     vignette that already keeps the headline legible. */
+  background:
+    radial-gradient(60% 55% at 82% 12%, rgba(194, 145, 31, 0.22) 0%, rgba(194, 145, 31, 0) 70%),
+    linear-gradient(180deg, rgba(33,24,18,0.05) 0%, rgba(33,24,18,0.55) 85%);
 }
 .hero__content { position: relative; z-index: 1; padding-bottom: var(--space-3xl); max-width: 54rem; }
 .hero__content .eyebrow { color: var(--color-text-on-dark-muted); }
@@ -297,13 +338,6 @@ section { position: relative; }
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero__scroll-cue {
-  position: absolute; right: var(--container-pad); bottom: var(--space-lg); z-index: 1;
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);
-  color: var(--color-text-on-dark-muted); font-size: var(--fs-xs); letter-spacing: var(--ls-wide); text-transform: uppercase;
-}
-.hero__scroll-cue::after { content: ''; width: 1px; height: 2.5rem; background: currentColor; opacity: 0.5; }
-
 /* ---- Marquee ---- */
 .marquee {
   background: var(--color-text);
@@ -769,7 +803,7 @@ section { position: relative; }
    dark section on the page (.process__panel h3, .footer, etc). Without
    this it renders near-invisible dark-on-dark. */
 .testimonials .section-head h2 { color: var(--color-text-on-dark); }
-.testimonials__rating { display: flex; align-items: center; gap: var(--space-md); flex-shrink: 0; }
+.testimonials__rating { display: flex; align-items: center; gap: var(--space-md); flex-shrink: 0; margin-top: var(--space-sm); }
 .testimonials__rating strong { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-text-on-dark); }
 .testimonials__rating .rating__stars { color: var(--color-accent); }
 
@@ -777,11 +811,12 @@ section { position: relative; }
 .testimonial-spotlight__mark {
   position: absolute;
   top: -3rem; left: -0.5rem;
-  font-family: var(--font-display);
+  font-family: var(--font-accent);
+  font-style: italic;
   font-size: clamp(8rem, 6rem + 10vw, 13rem);
   line-height: 1;
   color: var(--color-accent);
-  opacity: 0.14;
+  opacity: 0.16;
   pointer-events: none;
   z-index: 0;
 }
@@ -789,8 +824,10 @@ section { position: relative; }
 .testimonial-spotlight__quote .rating__stars { color: var(--color-accent); letter-spacing: 0.2em; }
 .testimonial-spotlight__quote blockquote {
   margin: var(--space-md) 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 1.25rem + 2vw, 2.75rem);
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 1.4rem + 2.2vw, 3rem);
   line-height: var(--lh-snug);
   color: var(--color-text-on-dark);
   max-width: 34rem;
@@ -815,6 +852,8 @@ section { position: relative; }
   font-size: var(--fs-md);
   background: var(--tint, var(--color-primary));
   color: var(--color-surface-dark);
+  /* Double-ring medallion echo of the logo's circular frame. */
+  box-shadow: 0 0 0 2px var(--color-surface-dark), 0 0 0 3px var(--color-accent);
 }
 .testimonial-spotlight__id { display: flex; flex-direction: column; margin-right: auto; }
 .testimonial-spotlight__name { font-weight: 600; color: var(--color-text-on-dark); }
@@ -886,14 +925,6 @@ section { position: relative; }
   overflow: hidden;
   padding-block: clamp(2.5rem, 2rem + 2vw, 3.25rem);
 }
-.newsletter::before, .newsletter::after {
-  content: '✦';
-  position: absolute;
-  color: rgba(243, 236, 226, 0.15);
-  font-size: 2.25rem;
-}
-.newsletter::before { top: 12%; left: 6%; }
-.newsletter::after { bottom: 14%; right: 7%; }
 .newsletter h2 { color: var(--color-text-on-dark); font-size: clamp(1.75rem, 1.5rem + 1.4vw, 2.5rem); }
 .newsletter .lede { color: rgba(243, 236, 226, 0.85); margin-inline: auto; margin-top: var(--space-sm); font-size: var(--fs-sm); }
 .newsletter form { max-width: 24rem; margin: var(--space-lg) auto 0; }
@@ -903,7 +934,19 @@ section { position: relative; }
 .newsletter__privacy { margin-top: var(--space-sm); font-size: var(--fs-xs); color: rgba(243, 236, 226, 0.7); }
 
 /* ---- Footer ---- */
-.site-footer { background: var(--color-surface-dark); color: var(--color-text-on-dark-muted); overflow: hidden; }
+.site-footer { background: var(--color-surface-dark); color: var(--color-text-on-dark-muted); overflow: hidden; position: relative; }
+/* Faint oversized medallion watermark, echoing the logo, bleeding off the
+   top-right corner behind the giant wordmark — a quiet brand signature
+   rather than a literal repeated logo. */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -5rem; right: -6rem;
+  width: 16rem; height: 16rem;
+  background: url('../images/LOGO.png') center / contain no-repeat;
+  opacity: 0.05;
+  pointer-events: none;
+}
 
 .footer__mark {
   display: flex;
