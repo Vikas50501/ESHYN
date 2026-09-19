@@ -244,14 +244,14 @@ html.has-custom-cursor .cursor-dot.is-hovering { opacity: 0; }
 }
 .ph__icon { display: none; }
 
-.ph--terracotta { background-image: linear-gradient(160deg, rgba(216,181,150,0.55) 0%, rgba(168,85,46,0.55) 100%), url('https://picsum.photos/seed/eshyn-terracotta/800/800'); color: #f3ece2; }
-.ph--olive { background-image: linear-gradient(160deg, rgba(185,173,132,0.55) 0%, rgba(107,96,69,0.55) 100%), url('https://picsum.photos/seed/eshyn-olive/800/800'); color: #f3ece2; }
-.ph--gold { background-image: linear-gradient(160deg, rgba(236,214,171,0.55) 0%, rgba(201,154,91,0.55) 100%), url('https://picsum.photos/seed/eshyn-gold/800/800'); color: #3a2e24; }
-.ph--espresso { background-image: linear-gradient(160deg, rgba(74,58,44,0.6) 0%, rgba(33,24,18,0.7) 100%), url('https://picsum.photos/seed/eshyn-espresso/800/800'); color: #d8b596; }
-.ph--clay { background-image: linear-gradient(160deg, rgba(226,185,160,0.55) 0%, rgba(176,106,68,0.55) 100%), url('https://picsum.photos/seed/eshyn-clay/800/800'); color: #f3ece2; }
-.ph--blush { background-image: linear-gradient(160deg, rgba(241,230,217,0.55) 0%, rgba(217,184,161,0.55) 100%), url('https://picsum.photos/seed/eshyn-blush/800/800'); color: #7e3d1f; }
-.ph--sand { background-image: linear-gradient(160deg, rgba(236,224,205,0.55) 0%, rgba(199,174,135,0.55) 100%), url('https://picsum.photos/seed/eshyn-sand/800/800'); color: #4a3a2c; }
-.ph--ink { background-image: linear-gradient(160deg, rgba(92,80,68,0.6) 0%, rgba(37,27,20,0.7) 100%), url('https://picsum.photos/seed/eshyn-ink/800/800'); color: #c99a5b; }
+.ph--terracotta { background-image: linear-gradient(160deg, rgba(216,181,150,0.16) 0%, rgba(168,85,46,0.16) 100%), url('https://picsum.photos/seed/eshyn-terracotta/800/800'); color: #f3ece2; }
+.ph--olive { background-image: linear-gradient(160deg, rgba(185,173,132,0.16) 0%, rgba(107,96,69,0.16) 100%), url('https://picsum.photos/seed/eshyn-olive/800/800'); color: #f3ece2; }
+.ph--gold { background-image: linear-gradient(160deg, rgba(236,214,171,0.16) 0%, rgba(201,154,91,0.16) 100%), url('https://picsum.photos/seed/eshyn-gold/800/800'); color: #3a2e24; }
+.ph--espresso { background-image: linear-gradient(160deg, rgba(74,58,44,0.22) 0%, rgba(33,24,18,0.3) 100%), url('https://picsum.photos/seed/eshyn-espresso/800/800'); color: #d8b596; }
+.ph--clay { background-image: linear-gradient(160deg, rgba(226,185,160,0.16) 0%, rgba(176,106,68,0.16) 100%), url('https://picsum.photos/seed/eshyn-clay/800/800'); color: #f3ece2; }
+.ph--blush { background-image: linear-gradient(160deg, rgba(241,230,217,0.16) 0%, rgba(217,184,161,0.16) 100%), url('https://picsum.photos/seed/eshyn-blush/800/800'); color: #7e3d1f; }
+.ph--sand { background-image: linear-gradient(160deg, rgba(236,224,205,0.16) 0%, rgba(199,174,135,0.16) 100%), url('https://picsum.photos/seed/eshyn-sand/800/800'); color: #4a3a2c; }
+.ph--ink { background-image: linear-gradient(160deg, rgba(92,80,68,0.22) 0%, rgba(37,27,20,0.3) 100%), url('https://picsum.photos/seed/eshyn-ink/800/800'); color: #c99a5b; }
 
 /* ---- Product Card ---- */
 .product-card {
