@@ -128,6 +128,49 @@ section { position: relative; }
 
 .product-accordions { max-width: 44rem; margin-top: var(--space-2xl); }
 
+/* "Why choose this fragrance" — short trust bullets, high in the info
+   column where they can still influence the add-to-cart decision. */
+.product-highlights { list-style: none; margin-top: var(--space-lg); display: flex; flex-direction: column; gap: 0.55rem; }
+.product-highlights li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: var(--fs-sm); color: var(--color-text-secondary); }
+.product-highlights__check { flex-shrink: 0; width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; color: var(--color-primary); }
+
+/* ---- Fragrance profile (longevity / projection / occasion / season) ---- */
+.fragrance-meta { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-2xl); }
+.fragrance-meta__item { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.fragrance-meta__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.fragrance-meta__value { display: block; margin-top: 0.5rem; font-family: var(--font-display); font-size: var(--fs-lg); }
+.fragrance-meta__meter { height: 4px; border-radius: var(--radius-pill); background: var(--color-border); margin-top: var(--space-sm); overflow: hidden; }
+.fragrance-meta__meter-fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); }
+.fragrance-meta__item p { margin-top: 0.5rem; font-size: var(--fs-sm); color: var(--color-text-secondary); }
+
+.fragrance-tags { display: flex; flex-wrap: wrap; gap: var(--space-2xl); margin-top: var(--space-xl); }
+.fragrance-tags__group { display: flex; flex-direction: column; gap: 0.6rem; }
+.fragrance-tags__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.fragrance-tags__list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ---- Product story (editorial spread, product-specific) ---- */
+.product-story__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); align-items: center; }
+.product-story__media { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden; }
+.product-story__content h2 { margin-top: var(--space-sm); font-size: var(--fs-2xl); }
+.product-story__text { margin-top: var(--space-lg); font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem); line-height: var(--lh-snug); color: var(--color-text-secondary); }
+
+/* ---- How to apply ---- */
+.how-to-apply__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); margin-top: var(--space-xl); }
+.how-to-apply__num { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-accent); }
+.how-to-apply__step h3 { margin-top: var(--space-sm); font-size: var(--fs-lg); }
+.how-to-apply__step p { margin-top: var(--space-sm); color: var(--color-text-secondary); font-size: var(--fs-sm); }
+
+/* ---- Reviews ---- */
+.review-summary { display: flex; align-items: center; gap: var(--space-md); flex-shrink: 0; }
+.review-summary strong { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-text); }
+.review-summary .rating__stars { color: var(--color-accent); }
+.product-reviews__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-xl); }
+.review-card { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-alt); }
+.review-card .rating__stars { color: var(--color-accent); }
+.review-card p { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-md); line-height: var(--lh-snug); }
+.review-card__meta { margin-top: var(--space-lg); display: flex; align-items: center; gap: 0.4rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.review-card__meta svg { width: 0.75rem; height: 0.75rem; color: var(--color-success); }
+
 /* ---- Announcement bar ---- */
 .announcement-bar {
   background: var(--color-surface-dark);

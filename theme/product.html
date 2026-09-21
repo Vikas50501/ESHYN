@@ -226,6 +226,7 @@
           <div class="product-info__badges" data-pdp-badges></div>
           <div class="price" data-pdp-price></div>
           <p class="product-info__desc" data-pdp-desc></p>
+          <ul class="product-highlights" data-pdp-highlights></ul>
 
           <div class="product-info__options" data-pdp-options></div>
 
@@ -269,6 +270,132 @@
     </div>
   </section>
 
+  <!-- ---- Fragrance profile (scent pyramid + longevity/projection/occasion) ---- -->
+  <section class="section section--tight section--alt" style="position:relative; overflow:hidden;">
+    <span class="section-numeral" style="top:-2rem; right:3%;" aria-hidden="true">02</span>
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text" style="max-width:none; text-align:center; margin-inline:auto">
+          <span class="eyebrow" style="justify-content:center">Scent Profile</span>
+          <h2>The Fragrance Journey</h2>
+          <p class="lede" style="margin-inline:auto; text-align:center">How <span data-pdp-title>this fragrance</span> unfolds in three layers, each with its own moment on skin.</p>
+        </div>
+      </div>
+
+      <div class="scent-timeline" data-reveal data-scent-timeline>
+        <div class="scent-timeline__track">
+          <button type="button" class="scent-timeline__stop is-active" data-scent-stop="0">
+            <span class="scent-timeline__dot"></span>
+            <span class="scent-timeline__time">0 Min</span>
+          </button>
+          <button type="button" class="scent-timeline__stop" data-scent-stop="1">
+            <span class="scent-timeline__dot"></span>
+            <span class="scent-timeline__time">1–4 Hrs</span>
+          </button>
+          <button type="button" class="scent-timeline__stop" data-scent-stop="2">
+            <span class="scent-timeline__dot"></span>
+            <span class="scent-timeline__time">4+ Hrs</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="scent-grid" data-reveal data-scent-grid data-pdp-scent-grid></div>
+
+      <div class="fragrance-meta" data-reveal>
+        <div class="fragrance-meta__item">
+          <span class="fragrance-meta__label">Longevity</span>
+          <span class="fragrance-meta__value" data-pdp-longevity-value></span>
+          <div class="fragrance-meta__meter"><div class="fragrance-meta__meter-fill" data-pdp-longevity-fill></div></div>
+        </div>
+        <div class="fragrance-meta__item">
+          <span class="fragrance-meta__label">Projection</span>
+          <span class="fragrance-meta__value" data-pdp-projection-value></span>
+          <div class="fragrance-meta__meter"><div class="fragrance-meta__meter-fill" data-pdp-projection-fill></div></div>
+        </div>
+        <div class="fragrance-meta__item">
+          <span class="fragrance-meta__label">Best Suited For</span>
+          <p data-pdp-best-for></p>
+        </div>
+      </div>
+
+      <div class="fragrance-tags" data-reveal>
+        <div class="fragrance-tags__group">
+          <span class="fragrance-tags__label">Occasions</span>
+          <div class="fragrance-tags__list" data-pdp-occasions></div>
+        </div>
+        <div class="fragrance-tags__group">
+          <span class="fragrance-tags__label">Best In Season</span>
+          <div class="fragrance-tags__list" data-pdp-seasons></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Product story ---- -->
+  <section class="section">
+    <div class="container">
+      <div class="product-story__grid">
+        <figure class="product-story__media shine" data-tilt data-parallax data-reveal>
+          <div data-pdp-story-media></div>
+        </figure>
+        <div class="product-story__content" data-reveal>
+          <span class="eyebrow">The Story</span>
+          <h2 data-pdp-title>This Fragrance</h2>
+          <p class="product-story__text font-accent" data-pdp-story></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- How to apply ---- -->
+  <section class="section section--tight section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <span class="eyebrow">Ritual</span>
+          <h2>How to Wear It</h2>
+        </div>
+      </div>
+      <div class="how-to-apply__grid">
+        <div class="how-to-apply__step" data-reveal>
+          <span class="how-to-apply__num">01</span>
+          <h3>Dab, Don't Rub</h3>
+          <p>Apply to pulse points — wrists, neck, and behind the ears — where body heat helps the oil open up naturally.</p>
+        </div>
+        <div class="how-to-apply__step" data-reveal>
+          <span class="how-to-apply__num">02</span>
+          <h3>Moisturized Skin Holds Longer</h3>
+          <p>Oil-based attars cling to hydrated skin. A fragrance-free moisturizer underneath extends wear noticeably.</p>
+        </div>
+        <div class="how-to-apply__step" data-reveal>
+          <span class="how-to-apply__num">03</span>
+          <h3>Reapply, Don't Overdo</h3>
+          <p>A little goes a long way. Two to three dabs is plenty — reapply after the longevity window above, if needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Reviews ---- -->
+  <section class="section product-reviews">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <span class="eyebrow">Reviews</span>
+          <h2>What they're saying</h2>
+        </div>
+        <div class="review-summary">
+          <strong data-pdp-rating-value></strong>
+          <div>
+            <span class="rating__stars" data-pdp-review-stars></span>
+            <p class="text-sm text-muted" data-pdp-review-count></p>
+          </div>
+        </div>
+      </div>
+      <div class="product-reviews__grid" data-reveal data-pdp-reviews></div>
+    </div>
+  </section>
+
   <!-- ---- Related products ---- -->
   <section class="section section--tight section--alt">
     <div class="container">
@@ -279,6 +406,40 @@
         </div>
       </div>
       <div class="product-grid" data-pdp-related></div>
+    </div>
+  </section>
+
+  <!-- ---- FAQ ---- -->
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <div class="section-head" style="justify-content:center; text-align:center" data-reveal>
+        <div class="section-head__text" style="max-width:none; text-align:center; margin-inline:auto">
+          <span class="eyebrow" style="justify-content:center">FAQ</span>
+          <h2>Common Questions</h2>
+        </div>
+      </div>
+      <div data-accordion-single data-reveal>
+        <div class="accordion-item is-open">
+          <button type="button" class="accordion-trigger"><span>Is this really alcohol-free?</span><span class="accordion-icon"></span></button>
+          <div class="accordion-panel"><div class="accordion-panel__inner">Yes — every ESHYN attar and eau de parfum is 0% alcohol. We use pure botanical oil extracts in a sandalwood or jojoba base instead, so it's gentler on skin and doesn't evaporate as quickly.</div></div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger"><span>How is this different from a regular perfume?</span><span class="accordion-icon"></span></button>
+          <div class="accordion-panel"><div class="accordion-panel__inner">Alcohol-based perfumes are mostly alcohol with a small percentage of fragrance oil, so they project hard for the first hour and fade fast. Attars are concentrated oil, so they sit closer to the skin and evolve slowly over many hours.</div></div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger"><span>Will it stain my clothes?</span><span class="accordion-icon"></span></button>
+          <div class="accordion-panel"><div class="accordion-panel__inner">Applied in the small quantities recommended (2-3 dabs), no. As with any oil-based product, avoid direct contact with light-colored silk.</div></div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger"><span>Is it authentic, Kannauj-made?</span><span class="accordion-icon"></span></button>
+          <div class="accordion-panel"><div class="accordion-panel__inner">Yes. Every batch is distilled in Kannauj, India's perfume capital, using the traditional deg-bhapka method — copper vessels, wood fires, and weeks of patience. No importers or distributors in between.</div></div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger"><span>What's your return policy?</span><span class="accordion-icon"></span></button>
+          <div class="accordion-panel"><div class="accordion-panel__inner">7-day returns on unopened bottles. See our <a class="link-underline" href="/policies/refund-policy">refund policy</a> for details.</div></div>
+        </div>
+      </div>
     </div>
   </section>
 

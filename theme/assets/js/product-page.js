@@ -112,6 +112,114 @@
     }
   }
 
+  function renderHighlights() {
+    const wrap = document.querySelector('[data-pdp-highlights]');
+    if (!wrap) return;
+    const highlights = (pdp.product.scent && pdp.product.scent.highlights) || [];
+    wrap.innerHTML = highlights
+      .map((text) => `<li><svg class="product-highlights__check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/></svg>${text}</li>`)
+      .join('');
+  }
+
+  /* Reuses the exact .scent-timeline/.scent-grid/.scent-card markup and
+     copy structure from the homepage's "Anatomy of a Scent" section — same
+     visual language, populated with this product's own notes. creative.js's
+     initScentAnatomy() (already loaded on this page) picks up the timeline
+     ↔ card hover/click sync automatically since it queries generically for
+     [data-scent-timeline]/[data-scent-grid], no extra wiring needed here. */
+  function renderScentPyramid() {
+    const grid = document.querySelector('[data-pdp-scent-grid]');
+    if (!grid) return;
+    const notes = pdp.product.scent && pdp.product.scent.notes;
+    if (!notes) { grid.closest('section').style.display = 'none'; return; }
+
+    const tiers = [
+      { key: 'top', cls: 'scent-card--top', label: 'Top Note — First 15 Minutes', name: 'The Introduction', desc: 'Bright and immediate — the first impression that fades fastest.', notes: notes.top },
+      { key: 'heart', cls: 'scent-card--heart', label: 'Heart Note — Hours 1–4', name: 'The Character', desc: "The fragrance's true identity — rounder, warmer, most memorable.", notes: notes.heart },
+      { key: 'base', cls: 'scent-card--base', label: 'Base Note — Hours 4+', name: 'The Memory', desc: 'Deep and lasting — what lingers on skin and fabric long after.', notes: notes.base }
+    ];
+
+    grid.innerHTML = tiers
+      .map((tier, i) => `
+        <article class="scent-card ${tier.cls}${i === 0 ? ' is-active' : ''}" data-scent-card="${i}">
+          <span class="scent-card__index" aria-hidden="true">0${i + 1}</span>
+          <span class="scent-card__label">${tier.label}</span>
+          <h3 class="scent-card__name">${tier.name}</h3>
+          <p class="scent-card__desc">${tier.desc}</p>
+          <div class="scent-card__notes">${tier.notes.map((n) => `<span>${n}</span>`).join('')}</div>
+        </article>
+      `)
+      .join('');
+  }
+
+  function renderFragranceMeta() {
+    const scent = pdp.product.scent;
+    if (!scent) return;
+
+    const longevityLabels = ['', '1-2 Hours', '2-3 Hours', '3-4 Hours', '4-5 Hours', '5-6 Hours', '6-8 Hours', '6-8 Hours', '8+ Hours', '8+ Hours', 'All Day'];
+    const longevityEl = document.querySelector('[data-pdp-longevity-value]');
+    const longevityFill = document.querySelector('[data-pdp-longevity-fill]');
+    if (longevityEl) longevityEl.textContent = longevityLabels[scent.longevity] || `${scent.longevity}+ Hours`;
+    if (longevityFill) longevityFill.style.width = Math.min(100, (scent.longevity / 10) * 100) + '%';
+
+    const projectionScale = { Light: 35, Moderate: 65, Strong: 95 };
+    const projectionEl = document.querySelector('[data-pdp-projection-value]');
+    const projectionFill = document.querySelector('[data-pdp-projection-fill]');
+    if (projectionEl) projectionEl.textContent = scent.projection;
+    if (projectionFill) projectionFill.style.width = (projectionScale[scent.projection] || 60) + '%';
+
+    const bestForEl = document.querySelector('[data-pdp-best-for]');
+    if (bestForEl) bestForEl.textContent = scent.bestFor;
+
+    const occasionsEl = document.querySelector('[data-pdp-occasions]');
+    if (occasionsEl) occasionsEl.innerHTML = scent.occasions.map((o) => `<span class="chip">${o}</span>`).join('');
+    const seasonsEl = document.querySelector('[data-pdp-seasons]');
+    if (seasonsEl) seasonsEl.innerHTML = scent.seasons.map((s) => `<span class="chip">${s}</span>`).join('');
+  }
+
+  function renderStory() {
+    const scent = pdp.product.scent;
+    const mediaEl = document.querySelector('[data-pdp-story-media]');
+    const textEl = document.querySelector('[data-pdp-story]');
+    if (mediaEl) mediaEl.innerHTML = window.esPlaceholder(pdp.product.media[1] || pdp.product.media[0], pdp.product.title, 'vessel');
+    if (textEl) textEl.textContent = scent ? scent.story : pdp.product.shortDescription;
+  }
+
+  function renderReviews() {
+    const product = pdp.product;
+    const scent = product.scent;
+    const reviews = (scent && scent.reviews) || [];
+    const stars = Math.round(product.rating.value);
+    const starStr = '★★★★★'.slice(0, stars) + '☆☆☆☆☆'.slice(0, 5 - stars);
+
+    const valueEl = document.querySelector('[data-pdp-rating-value]');
+    const starsEl = document.querySelector('[data-pdp-review-stars]');
+    const countEl = document.querySelector('[data-pdp-review-count]');
+    if (valueEl) valueEl.textContent = product.rating.value;
+    if (starsEl) starsEl.textContent = starStr;
+    if (countEl) countEl.textContent = `Based on ${product.rating.count} verified reviews`;
+
+    const grid = document.querySelector('[data-pdp-reviews]');
+    if (!grid) return;
+    grid.innerHTML = reviews
+      .map((r) => {
+        const rStars = '★★★★★'.slice(0, r.rating) + '☆☆☆☆☆'.slice(0, 5 - r.rating);
+        return `
+          <article class="review-card">
+            <span class="rating__stars">${rStars}</span>
+            <p>"${r.text}"</p>
+            <div class="review-card__meta">
+              <span>${r.name}, ${r.location}</span>
+              <span>·</span>
+              <svg viewBox="0 0 20 20"><path fill="currentColor" d="M8 12.5l-3-3 1.4-1.4L8 9.7l5.6-5.6L15 5.5z"/></svg>
+              <span>Verified Purchase</span>
+            </div>
+          </article>
+        `;
+      })
+      .join('');
+  }
+
   function renderRelated() {
     const p = pdp.product;
     const all = window.PRODUCTS || [];
@@ -163,6 +271,11 @@
     renderGallery();
     renderOptions();
     renderPriceAndStock();
+    renderHighlights();
+    renderScentPyramid();
+    renderFragranceMeta();
+    renderStory();
+    renderReviews();
     renderRelated();
   }
 

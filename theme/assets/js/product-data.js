@@ -23,7 +23,19 @@ const PRODUCTS = [
     rating: { value: 4.8, count: 175 },
     badges: ['bestseller', 'sale'],
     tags: ['attar', 'earthy', 'unisex'],
-    collections: ['attars', 'bestsellers']
+    collections: ['attars', 'bestsellers'],
+    scent: {
+      notes: { top: ['Citrus', 'Green Leaf'], heart: ['Wet Earth', 'Rose'], base: ['Sandalwood', 'Musk'] },
+      longevity: 8, projection: 'Strong',
+      occasions: ['Evening', 'Festive'], seasons: ['Monsoon', 'Winter'],
+      bestFor: 'Those drawn to nostalgic, earthy scents with old-world depth.',
+      story: "Named for petrichor — the scent of the first monsoon rain hitting dry Kannauj soil. Our perfumers have chased this exact moment for over two centuries, distilling baked clay and rain-soaked earth into a single vial of oil.",
+      highlights: ['Alcohol-free & skin-friendly', 'Deg-bhapka distilled over weeks, not hours', 'Evolves for 8+ hours on skin'],
+      reviews: [
+        { name: 'Ananya R.', location: 'Mumbai', rating: 5, text: "Smells exactly like the first monsoon rain. I've never had a fragrance stop strangers before." },
+        { name: 'Rohit K.', location: 'Pune', rating: 5, text: "Unlike anything from a mall counter. Genuinely unique and it lasts the whole day." }
+      ]
+    }
   },
   {
     id: 'p-sandalwood-attar',
@@ -42,7 +54,19 @@ const PRODUCTS = [
     rating: { value: 4.7, count: 142 },
     badges: ['bestseller'],
     tags: ['attar', 'woody'],
-    collections: ['attars', 'bestsellers']
+    collections: ['attars', 'bestsellers'],
+    scent: {
+      notes: { top: ['Bergamot'], heart: ['Rose', 'Saffron'], base: ['Mysore Sandalwood', 'Amber'] },
+      longevity: 9, projection: 'Strong',
+      occasions: ['Daily Wear', 'Formal'], seasons: ['All Season', 'Winter'],
+      bestFor: 'Sandalwood purists who want warmth without sweetness.',
+      story: "Aged for months using wood sourced in the Mysore tradition, then rested in leather bhapkas until the raw wood note rounds into something creamy and skin-like.",
+      highlights: ['Alcohol-free & skin-friendly', 'No synthetic sandalwood substitutes', 'Ages beautifully on skin over the day'],
+      reviews: [
+        { name: 'Meera T.', location: 'Bengaluru', rating: 5, text: 'The creaminess is unreal — nothing like the sharp, synthetic sandalwood I’ve tried before.' },
+        { name: 'Arjun V.', location: 'Delhi', rating: 4, text: 'Beautiful, warm, long-lasting. Wish the 12ml came in a bigger size too.' }
+      ]
+    }
   },
   {
     id: 'p-gulab-attar',
@@ -61,7 +85,19 @@ const PRODUCTS = [
     rating: { value: 4.9, count: 107 },
     badges: [],
     tags: ['attar', 'floral'],
-    collections: ['attars']
+    collections: ['attars'],
+    scent: {
+      notes: { top: ['Green Leaf', 'Litchi'], heart: ['Damask Rose', 'Mogra'], base: ['Musk', 'Sandalwood'] },
+      longevity: 6, projection: 'Moderate',
+      occasions: ['Daytime', 'Wedding'], seasons: ['Spring', 'Summer'],
+      bestFor: 'Romantics who want a true, unsweetened rose.',
+      story: "Thousands of hand-picked Damask roses are distilled at dawn, when their oils are most concentrated, straight into sandalwood oil over three slow weeks — the same method Kannauj has used for generations.",
+      highlights: ['Real Damask rose, not rose-scented alcohol', 'Alcohol-free & skin-friendly', 'A light, wearable floral for daytime'],
+      reviews: [
+        { name: 'Priya S.', location: 'Jaipur', rating: 5, text: 'Finally a rose attar that smells like real roses, not rose-flavoured candy.' },
+        { name: 'Kavya N.', location: 'Hyderabad', rating: 5, text: 'Wore this to my sister’s wedding and got asked about it all day.' }
+      ]
+    }
   },
   {
     id: 'p-champa-muse',
@@ -80,7 +116,19 @@ const PRODUCTS = [
     rating: { value: 4.9, count: 9 },
     badges: ['new', 'sale'],
     tags: ['edp', 'floral'],
-    collections: ['eau-de-parfum', 'new-arrivals']
+    collections: ['eau-de-parfum', 'new-arrivals'],
+    scent: {
+      notes: { top: ['Bergamot', 'Pink Pepper'], heart: ['Champa Blossom', 'Ylang Ylang'], base: ['Musk', 'Vanilla Bean'] },
+      longevity: 7, projection: 'Moderate',
+      occasions: ['Evening', 'Date Night'], seasons: ['Autumn', 'Winter'],
+      bestFor: 'Those who want a warm, magnetic floral that lingers.',
+      story: "Champa Muse translates the golden, honeyed scent of champa blossoms — sacred in Indian gardens for centuries — into a modern, alcohol-free eau de parfum built for evenings that matter.",
+      highlights: ['Alcohol-free eau de parfum', 'Golden champa, not a generic floral', 'Warm musk-vanilla base that lasts'],
+      reviews: [
+        { name: 'Ishita M.', location: 'Kolkata', rating: 5, text: 'Golden, warm, and so different from anything else in my collection. New favourite.' },
+        { name: 'Neha D.', location: 'Chandigarh', rating: 5, text: 'The vanilla base makes it feel expensive without being loud.' }
+      ]
+    }
   },
   {
     id: 'p-dahn-al-oud',
@@ -99,7 +147,19 @@ const PRODUCTS = [
     rating: { value: 4.8, count: 8 },
     badges: ['sale'],
     tags: ['edp', 'woody', 'oud'],
-    collections: ['eau-de-parfum']
+    collections: ['eau-de-parfum'],
+    scent: {
+      notes: { top: ['Saffron', 'Rose'], heart: ['Cambodian Oud', 'Amber'], base: ['Musk', 'Sandalwood'] },
+      longevity: 9, projection: 'Strong',
+      occasions: ['Evening', 'Festive'], seasons: ['Winter', 'Autumn'],
+      bestFor: 'Oud lovers who want depth without a heavy, medicinal edge.',
+      story: "Dark, resinous Cambodian oud wood, softened with saffron and rose — a modern take on a scent that has anchored South Asian and Middle Eastern perfumery for centuries.",
+      highlights: ['Real Cambodian oud, alcohol-free', 'Rounded with saffron — never harsh', 'Room-filling projection that holds all day'],
+      reviews: [
+        { name: 'Kabir S.', location: 'Delhi', rating: 5, text: "Finally an oud that doesn't give me a headache. Lasts the entire workday without fading." },
+        { name: 'Farhan A.', location: 'Lucknow', rating: 4, text: 'Rich and smoky without being overwhelming. Perfect for winter evenings.' }
+      ]
+    }
   },
   {
     id: 'p-forest-rush',
@@ -117,7 +177,19 @@ const PRODUCTS = [
     rating: { value: 4.6, count: 3 },
     badges: ['new'],
     tags: ['edp', 'fresh', 'green'],
-    collections: ['eau-de-parfum', 'new-arrivals']
+    collections: ['eau-de-parfum', 'new-arrivals'],
+    scent: {
+      notes: { top: ['Vetiver', 'Bergamot'], heart: ['Fig Leaf', 'Green Accord'], base: ['Cedar', 'Musk'] },
+      longevity: 5, projection: 'Light',
+      occasions: ['Daytime', 'Casual'], seasons: ['Summer', 'Spring'],
+      bestFor: 'Anyone who wants an easy, energizing everyday scent.',
+      story: "Built around cool vetiver and crushed fig leaf — meant to feel like a walk through wet pine after rain, bottled for the days you want to feel awake.",
+      highlights: ['Alcohol-free & lightweight', 'Office-friendly, never overpowering', 'Refreshing green accord, not sweet'],
+      reviews: [
+        { name: 'Sara J.', location: 'Goa', rating: 5, text: 'My go-to for gym mornings. Fresh without being sharp or synthetic.' },
+        { name: 'Vikram P.', location: 'Chennai', rating: 4, text: 'Light and clean. Would love a bigger bottle option.' }
+      ]
+    }
   },
   {
     id: 'p-discovery-set',
@@ -135,7 +207,19 @@ const PRODUCTS = [
     rating: { value: 4.9, count: 248 },
     badges: ['bestseller'],
     tags: ['gift', 'set'],
-    collections: ['gifting', 'bestsellers']
+    collections: ['gifting', 'bestsellers'],
+    scent: {
+      notes: { top: ['Citrus', 'Bergamot'], heart: ['Rose', 'Oud'], base: ['Sandalwood', 'Musk'] },
+      longevity: 7, projection: 'Moderate',
+      occasions: ['Gifting', 'Discovery'], seasons: ['All Season'],
+      bestFor: 'Gifting, or anyone still finding their signature scent.',
+      story: "For the undecided — five of our signature attars in travel-friendly 2ml vials, so you (or someone you love) can find a favourite before committing to a full bottle.",
+      highlights: ['5 full-strength attars, 2ml each', 'The easiest way to discover your signature scent', 'Alcohol-free, gift-box ready'],
+      reviews: [
+        { name: 'Meera T.', location: 'Bengaluru', rating: 5, text: "Gifted this to my sister — she's since reordered three full bottles. Packaging felt genuinely premium." },
+        { name: 'Aditi R.', location: 'Mumbai', rating: 5, text: 'Perfect way to try the whole range before picking a favourite. Great gift too.' }
+      ]
+    }
   },
   {
     id: 'p-black-musk',
@@ -153,7 +237,19 @@ const PRODUCTS = [
     rating: { value: 4.7, count: 18 },
     badges: ['sale'],
     tags: ['attar', 'musk'],
-    collections: ['attars']
+    collections: ['attars'],
+    scent: {
+      notes: { top: ['Cardamom'], heart: ['Black Musk'], base: ['Dark Amber'] },
+      longevity: 8, projection: 'Strong',
+      occasions: ['Evening', 'Winter Nights'], seasons: ['Winter'],
+      bestFor: 'Those who want a bold, skin-like musk that draws people close.',
+      story: "A deep, animalic musk grounded in dark amber and a trace of cardamom — inspired by the rare musk attars once reserved for royal courts.",
+      highlights: ['Alcohol-free & long-wearing', 'A true animalic musk, not a synthetic "clean musk"', 'Best worn where people get close'],
+      reviews: [
+        { name: 'Devika L.', location: 'Ahmedabad', rating: 5, text: 'Bold and unapologetic. Not for everyone, but I love it.' },
+        { name: 'Sameer H.', location: 'Indore', rating: 4, text: 'Deep and warm. A little goes a very long way.' }
+      ]
+    }
   }
 ];
 
