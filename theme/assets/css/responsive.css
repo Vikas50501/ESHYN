@@ -32,9 +32,12 @@
   .footer__legal { flex-direction: row; }
   .cart-drawer { width: min(26rem, 60vw); }
   .product-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); align-items: start; }
-  .fragrance-meta { grid-template-columns: repeat(3, 1fr); }
+  .feature-highlights { grid-template-columns: repeat(3, 1fr); }
+  .fragrance-meta { grid-template-columns: repeat(4, 1fr); }
   .product-story__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); }
   .how-to-apply__grid { grid-template-columns: repeat(3, 1fr); }
+  .occasion-cards { grid-template-columns: repeat(4, 1fr); }
+  .trust-cards { grid-template-columns: repeat(3, 1fr); }
   .product-reviews__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -42,6 +45,11 @@
 @media (min-width: 64rem) {
   .main-nav { display: block; }
   .mobile-nav-toggle, .mobile-nav, .mobile-nav__backdrop { display: none; }
+  .trust-cards { grid-template-columns: repeat(5, 1fr); }
+  /* The info column is wide enough here (product-hero is 2-col from
+     48rem, but the column itself stays narrow until this breakpoint) for
+     Add to Cart to share a row with qty + wishlist again. */
+  .product-info__actions .btn { flex: 1 1 auto; }
 
   .site-header__row { grid-template-columns: auto 1fr auto; gap: var(--space-lg); }
   .site-header__search,

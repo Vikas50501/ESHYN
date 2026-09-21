@@ -106,47 +106,152 @@ section { position: relative; }
 .product-gallery__thumb:hover { opacity: 0.85; }
 .product-gallery__thumb.is-active { opacity: 1; border-color: var(--color-text); }
 
-.product-info__vendor { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.product-info__category {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wider); text-transform: uppercase;
+  color: var(--color-primary);
+}
+.product-info__category::before { content: ''; width: 1.1rem; height: 1px; background: var(--gradient-gold); }
+.product-info__vendor { display: block; margin-top: 0.5rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
 .product-info h1 { margin-top: 0.3rem; font-size: var(--fs-2xl); }
 .product-info .rating { margin-top: var(--space-sm); }
 .product-info__badges { display: flex; gap: 0.4rem; margin-top: var(--space-sm); }
-.product-info .price { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-xl); }
+
+/* Price reads as a distinct focal moment, not just another text line. */
+.product-info__price-block { margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--color-border); }
+.product-info .price { font-family: var(--font-display); font-size: var(--fs-2xl); }
 .product-info .price .price-compare { font-size: var(--fs-md); margin-left: var(--space-sm); }
-.product-info__desc { margin-top: var(--space-md); color: var(--color-text-secondary); }
-.product-info__options { margin-top: var(--space-lg); }
-.product-info__actions { display: flex; gap: var(--space-md); align-items: center; margin-top: var(--space-lg); }
-.product-info__actions .qty-stepper { flex-shrink: 0; }
-.product-info__actions .btn { flex: 1; }
+.product-info__price-note { display: block; margin-top: 0.3rem; font-size: var(--fs-xs); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+
+/* The short description reads as an intimate pull-quote rather than a
+   plain product blurb — echoes the accent serif used for testimonials
+   and the story section elsewhere on this page. */
+.product-info__desc {
+  margin-top: var(--space-lg);
+  padding-left: var(--space-md);
+  border-left: 2px solid var(--color-accent);
+  font-style: italic;
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+  line-height: var(--lh-snug);
+  color: var(--color-text-secondary);
+}
+
+.product-info__options { margin-top: var(--space-xl); }
+/* flex-wrap + the Add to Cart button forced onto its own full-width line
+   (flex-basis:100%) — a plain flex:1 button can't shrink below its own
+   text's width ("ADD TO CART" at letter-spacing wide), which on narrow
+   phones pushed the wishlist button off the edge of the page entirely.
+   Wrapping is also what makes the button read as genuinely "large and
+   premium" rather than squeezed into a shared row; reverts to one row
+   once the info column is wide enough (see responsive.css). */
+.product-info__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-top: var(--space-xl); }
+.product-info__actions .qty-stepper { flex-shrink: 0; height: 3.5rem; border-radius: var(--radius-md); order: 1; }
+.product-info__actions .qty-stepper button { width: 3rem; font-size: 1.15rem; transition: background-color var(--duration-fast), color var(--duration-fast); }
+.product-info__actions .qty-stepper button:hover { background: var(--color-surface-alt); color: var(--color-primary); }
+.product-info__actions .qty-stepper input { width: 3rem; font-family: var(--font-display); font-size: var(--fs-lg); }
+.product-info__wishlist { order: 2; }
+.product-info__actions .btn {
+  flex: 1 1 100%;
+  min-width: 0;
+  order: 3;
+  height: 3.5rem;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-md);
+  letter-spacing: var(--ls-wide);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+.product-info__actions .btn:hover { box-shadow: var(--shadow-md); }
+.product-info__actions .btn:active { transform: translateY(1px); }
 /* Unlike .product-card__wishlist (absolutely positioned to float in a
    card's corner), this sits inline in a flex row next to Add to Cart. */
-.product-info__wishlist { border: 1px solid var(--color-border); flex-shrink: 0; }
-.product-info__wishlist svg { width: 1.1rem; height: 1.1rem; stroke: currentColor; fill: none; transition: fill var(--duration-fast), stroke var(--duration-fast); }
+.product-info__wishlist {
+  width: 3.5rem; height: 3.5rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  flex-shrink: 0;
+  transition: border-color var(--duration-base) var(--ease-standard), transform var(--duration-fast) var(--ease-out);
+}
+.product-info__wishlist:hover { border-color: var(--color-primary); transform: translateY(-2px); }
+.product-info__wishlist svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; transition: fill var(--duration-fast), stroke var(--duration-fast); }
 .product-info__wishlist.is-active svg { fill: var(--color-primary); stroke: var(--color-primary); }
-.product-info .stock-message { margin-top: var(--space-sm); }
-.product-info .trust-strip { margin-top: var(--space-xl); border-top: 1px solid var(--color-border); }
-.product-info .trust-strip__row { justify-content: flex-start; padding-inline: 0; }
+.product-info .stock-message { margin-top: var(--space-md); font-size: var(--fs-sm); }
+/* A soft pulse on the in-stock dot only — reads as "live" without being
+   distracting, and never applies to the low/out states. */
+.product-info .stock-message--in::before { animation: stock-pulse 2.2s ease-in-out infinite; }
+@keyframes stock-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
 .product-accordions { max-width: 44rem; margin-top: var(--space-2xl); }
 
-/* "Why choose this fragrance" — short trust bullets, high in the info
-   column where they can still influence the add-to-cart decision. */
-.product-highlights { list-style: none; margin-top: var(--space-lg); display: flex; flex-direction: column; gap: 0.55rem; }
-.product-highlights li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: var(--fs-sm); color: var(--color-text-secondary); }
-.product-highlights__check { flex-shrink: 0; width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; color: var(--color-primary); }
+/* ---- Feature highlight cards ----
+   Replaces the old plain-text trust strip: small bordered cards with an
+   icon, arranged to wrap naturally rather than needing an internal
+   horizontal scroll. */
+.feature-highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; margin-top: var(--space-xl); }
+.feature-highlights__card {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+}
+.feature-highlights__card:hover { transform: translateY(-3px); border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
+.feature-highlights__icon { width: 1.6rem; height: 1.6rem; color: var(--color-primary); }
+.feature-highlights__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text); line-height: 1.3; }
 
-/* ---- Fragrance profile (longevity / projection / occasion / season) ---- */
+/* ---- Fragrance details (longevity / sillage / concentration / family) ---- */
 .fragrance-meta { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-2xl); }
-.fragrance-meta__item { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
-.fragrance-meta__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.fragrance-meta__item { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); transition: border-color var(--duration-base), box-shadow var(--duration-base); }
+.fragrance-meta__item:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
+.fragrance-meta__icon { width: 1.5rem; height: 1.5rem; color: var(--color-accent); }
+.fragrance-meta__label { display: block; margin-top: var(--space-sm); font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
 .fragrance-meta__value { display: block; margin-top: 0.5rem; font-family: var(--font-display); font-size: var(--fs-lg); }
 .fragrance-meta__meter { height: 4px; border-radius: var(--radius-pill); background: var(--color-border); margin-top: var(--space-sm); overflow: hidden; }
 .fragrance-meta__meter-fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); }
 .fragrance-meta__item p { margin-top: 0.5rem; font-size: var(--fs-sm); color: var(--color-text-secondary); }
+.fragrance-meta__item--best-for { grid-column: 1 / -1; background: var(--color-surface-alt); }
 
 .fragrance-tags { display: flex; flex-wrap: wrap; gap: var(--space-2xl); margin-top: var(--space-xl); }
 .fragrance-tags__group { display: flex; flex-direction: column; gap: 0.6rem; }
 .fragrance-tags__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
 .fragrance-tags__list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ---- How it smells (scent-characteristic bars) ---- */
+.scent-characteristics { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); margin-top: var(--space-2xl); max-width: 34rem; margin-inline: auto; }
+.characteristic { display: grid; grid-template-columns: 6rem 1fr; align-items: center; gap: var(--space-md); }
+.characteristic__label { font-size: var(--fs-sm); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-secondary); }
+.characteristic__track { height: 6px; border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; }
+.characteristic__fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); }
+
+/* ---- When to wear it ---- */
+.occasion-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); margin-top: var(--space-xl); }
+.occasion-card {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-align: center;
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
+}
+.occasion-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.occasion-card.is-suited { border-color: var(--color-primary); background: var(--color-surface-alt); }
+.occasion-card__icon { width: 2rem; height: 2rem; margin-inline: auto; color: var(--color-primary); }
+.occasion-card__title { margin-top: var(--space-sm); font-family: var(--font-display); font-size: var(--fs-md); }
+.occasion-card__desc { margin-top: 0.3rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.occasion-card__badge { display: none; margin-top: var(--space-sm); font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-primary); }
+.occasion-card.is-suited .occasion-card__badge { display: block; }
+
+/* ---- Trust & authenticity (distinct from the compact feature-highlight
+   cards near the CTA — larger, more editorial, placed as its own moment
+   ahead of reviews) ---- */
+.trust-cards { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); margin-top: var(--space-xl); }
+.trust-card { text-align: center; padding: var(--space-xl) var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-standard); }
+.trust-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.trust-card__icon-wrap { width: 3.25rem; height: 3.25rem; margin-inline: auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--gradient-gold); }
+.trust-card__icon-wrap svg { width: 1.5rem; height: 1.5rem; color: var(--color-surface-dark); }
+.trust-card__title { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-md); }
+.trust-card__desc { margin-top: 0.4rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
 
 /* ---- Product story (editorial spread, product-specific) ---- */
 .product-story__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); align-items: center; }
@@ -165,7 +270,7 @@ section { position: relative; }
 .review-summary strong { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-text); }
 .review-summary .rating__stars { color: var(--color-accent); }
 .product-reviews__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-xl); }
-.review-card { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-alt); }
+.review-card { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
 .review-card .rating__stars { color: var(--color-accent); }
 .review-card p { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-md); line-height: var(--lh-snug); }
 .review-card__meta { margin-top: var(--space-lg); display: flex; align-items: center; gap: 0.4rem; font-size: var(--fs-xs); color: var(--color-text-muted); }

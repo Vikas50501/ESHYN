@@ -112,12 +112,72 @@
     }
   }
 
-  function renderHighlights() {
-    const wrap = document.querySelector('[data-pdp-highlights]');
+  /* Fixed brand-wide claims, except longevity which pulls the product's
+     own value — small bordered cards replacing the old plain-text strip. */
+  function renderFeatureHighlights() {
+    const wrap = document.querySelector('[data-pdp-feature-highlights]');
     if (!wrap) return;
-    const highlights = (pdp.product.scent && pdp.product.scent.highlights) || [];
-    wrap.innerHTML = highlights
-      .map((text) => `<li><svg class="product-highlights__check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/></svg>${text}</li>`)
+    const scent = pdp.product.scent;
+    const longevityLabel = scent ? `${scent.longevity}+ Hours` : '8+ Hours';
+    const items = [
+      { label: 'Alcohol-Free', icon: '<path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5z"/>' },
+      { label: 'Skin-Friendly', icon: '<path d="M10 17s-6-3.6-6-8a4 4 0 018-.4A4 4 0 0116 9c0 4.4-6 8-6 8z"/>' },
+      { label: 'Deg-Bhapka Distilled', icon: '<path d="M4 10h9M9 6l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>' },
+      { label: `${longevityLabel} Longevity`, icon: '<circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round" stroke-linejoin="round"/>' },
+      { label: 'Cruelty-Free', icon: '<circle cx="10" cy="10" r="7"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>' }
+    ];
+    wrap.innerHTML = items
+      .map((item) => `
+        <div class="feature-highlights__card">
+          <svg class="feature-highlights__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">${item.icon}</svg>
+          <span class="feature-highlights__label">${item.label}</span>
+        </div>
+      `)
+      .join('');
+  }
+
+  function renderCharacteristics() {
+    const wrap = document.querySelector('[data-pdp-characteristics]');
+    if (!wrap) return;
+    const chars = pdp.product.scent && pdp.product.scent.characteristics;
+    if (!chars) { wrap.closest('section').style.display = 'none'; return; }
+    wrap.innerHTML = Object.keys(chars)
+      .map((label) => `
+        <div class="characteristic">
+          <span class="characteristic__label">${label}</span>
+          <div class="characteristic__track"><div class="characteristic__fill" style="width:${chars[label]}%"></div></div>
+        </div>
+      `)
+      .join('');
+  }
+
+  /* The four occasion buckets are fixed brand copy; which ones highlight
+     as "suited" is inferred from this product's own occasions/seasons so
+     it stays truthful per-product without needing extra authored data. */
+  function renderOccasionCards() {
+    const wrap = document.querySelector('[data-pdp-occasion-cards]');
+    if (!wrap) return;
+    const scent = pdp.product.scent;
+    const occ = (scent && scent.occasions) || [];
+    const seasons = (scent && scent.seasons) || [];
+    const has = (list, ...keys) => keys.some((k) => list.some((v) => v.toLowerCase().includes(k)));
+
+    const cards = [
+      { title: 'Daily Wear', desc: 'Light, easy, effortless to reach for.', icon: '<path d="M10 3v3M10 14v3M3 10h3M14 10h3" stroke-linecap="round"/><circle cx="10" cy="10" r="4"/>', suited: has(occ, 'daily', 'casual', 'daytime') },
+      { title: 'Office', desc: 'Refined, close to skin, never loud.', icon: '<rect x="4" y="6" width="12" height="10" rx="1"/><path d="M7 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke-linecap="round"/>', suited: has(occ, 'daily', 'formal', 'daytime') },
+      { title: 'Evening', desc: 'Warmer, more expressive after dark.', icon: '<path d="M14 11a5 5 0 11-5-7 4 4 0 005 7z"/>', suited: has(occ, 'evening', 'date', 'night') },
+      { title: 'Special Occasions', desc: 'Festive, celebratory, memorable.', icon: '<path d="M10 3l1.5 3.5L15 8l-3 2 .8 4-2.8-1.8L7.2 14l.8-4-3-2 3.5-1.5z" stroke-linejoin="round"/>', suited: has(occ, 'festive', 'wedding') || has(seasons, 'winter') }
+    ];
+
+    wrap.innerHTML = cards
+      .map((c) => `
+        <div class="occasion-card${c.suited ? ' is-suited' : ''}">
+          <svg class="occasion-card__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">${c.icon}</svg>
+          <h3 class="occasion-card__title">${c.title}</h3>
+          <p class="occasion-card__desc">${c.desc}</p>
+          <span class="occasion-card__badge">✓ Great Fit</span>
+        </div>
+      `)
       .join('');
   }
 
@@ -167,6 +227,11 @@
     const projectionFill = document.querySelector('[data-pdp-projection-fill]');
     if (projectionEl) projectionEl.textContent = scent.projection;
     if (projectionFill) projectionFill.style.width = (projectionScale[scent.projection] || 60) + '%';
+
+    const concentrationEl = document.querySelector('[data-pdp-concentration]');
+    if (concentrationEl) concentrationEl.textContent = scent.concentration;
+    const familyEl = document.querySelector('[data-pdp-family]');
+    if (familyEl) familyEl.textContent = scent.family;
 
     const bestForEl = document.querySelector('[data-pdp-best-for]');
     if (bestForEl) bestForEl.textContent = scent.bestFor;
@@ -247,6 +312,8 @@
     document.querySelectorAll('[data-pdp-doctitle]').forEach((el) => { el.textContent = product.title + ' — ESHYN'; });
     document.querySelectorAll('[data-pdp-og-title]').forEach((el) => { el.setAttribute('content', product.title + ' — ESHYN'); });
     document.querySelector('[data-pdp-vendor]').textContent = product.vendor;
+    const categoryEl = document.querySelector('[data-pdp-category]');
+    if (categoryEl) categoryEl.textContent = product.type;
     document.querySelector('[data-pdp-desc]').textContent = product.shortDescription;
     const accordionDesc = document.querySelector('[data-pdp-accordion-desc]');
     if (accordionDesc) accordionDesc.textContent = product.shortDescription;
@@ -271,9 +338,11 @@
     renderGallery();
     renderOptions();
     renderPriceAndStock();
-    renderHighlights();
+    renderFeatureHighlights();
     renderScentPyramid();
     renderFragranceMeta();
+    renderCharacteristics();
+    renderOccasionCards();
     renderStory();
     renderReviews();
     renderRelated();

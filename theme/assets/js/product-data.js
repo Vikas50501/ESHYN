@@ -27,6 +27,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Citrus', 'Green Leaf'], heart: ['Wet Earth', 'Rose'], base: ['Sandalwood', 'Musk'] },
       longevity: 8, projection: 'Strong',
+      concentration: 'Pure Perfume Oil (Attar)', family: 'Earthy Woody',
+      characteristics: { Earthy: 95, Woody: 60, Smoky: 55, Fresh: 25, Warm: 70, Musky: 50 },
       occasions: ['Evening', 'Festive'], seasons: ['Monsoon', 'Winter'],
       bestFor: 'Those drawn to nostalgic, earthy scents with old-world depth.',
       story: "Named for petrichor — the scent of the first monsoon rain hitting dry Kannauj soil. Our perfumers have chased this exact moment for over two centuries, distilling baked clay and rain-soaked earth into a single vial of oil.",
@@ -58,6 +60,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Bergamot'], heart: ['Rose', 'Saffron'], base: ['Mysore Sandalwood', 'Amber'] },
       longevity: 9, projection: 'Strong',
+      concentration: 'Pure Perfume Oil (Attar)', family: 'Woody Creamy',
+      characteristics: { Earthy: 40, Woody: 95, Smoky: 20, Fresh: 15, Warm: 75, Musky: 45 },
       occasions: ['Daily Wear', 'Formal'], seasons: ['All Season', 'Winter'],
       bestFor: 'Sandalwood purists who want warmth without sweetness.',
       story: "Aged for months using wood sourced in the Mysore tradition, then rested in leather bhapkas until the raw wood note rounds into something creamy and skin-like.",
@@ -89,6 +93,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Green Leaf', 'Litchi'], heart: ['Damask Rose', 'Mogra'], base: ['Musk', 'Sandalwood'] },
       longevity: 6, projection: 'Moderate',
+      concentration: 'Pure Perfume Oil (Attar)', family: 'Floral',
+      characteristics: { Earthy: 20, Woody: 35, Smoky: 5, Fresh: 55, Warm: 40, Musky: 30 },
       occasions: ['Daytime', 'Wedding'], seasons: ['Spring', 'Summer'],
       bestFor: 'Romantics who want a true, unsweetened rose.',
       story: "Thousands of hand-picked Damask roses are distilled at dawn, when their oils are most concentrated, straight into sandalwood oil over three slow weeks — the same method Kannauj has used for generations.",
@@ -120,6 +126,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Bergamot', 'Pink Pepper'], heart: ['Champa Blossom', 'Ylang Ylang'], base: ['Musk', 'Vanilla Bean'] },
       longevity: 7, projection: 'Moderate',
+      concentration: 'Eau de Parfum', family: 'Floral Gourmand',
+      characteristics: { Earthy: 15, Woody: 30, Smoky: 10, Fresh: 35, Warm: 70, Musky: 55 },
       occasions: ['Evening', 'Date Night'], seasons: ['Autumn', 'Winter'],
       bestFor: 'Those who want a warm, magnetic floral that lingers.',
       story: "Champa Muse translates the golden, honeyed scent of champa blossoms — sacred in Indian gardens for centuries — into a modern, alcohol-free eau de parfum built for evenings that matter.",
@@ -151,6 +159,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Saffron', 'Rose'], heart: ['Cambodian Oud', 'Amber'], base: ['Musk', 'Sandalwood'] },
       longevity: 9, projection: 'Strong',
+      concentration: 'Eau de Parfum', family: 'Oud Woody',
+      characteristics: { Earthy: 45, Woody: 85, Smoky: 65, Fresh: 15, Warm: 75, Musky: 60 },
       occasions: ['Evening', 'Festive'], seasons: ['Winter', 'Autumn'],
       bestFor: 'Oud lovers who want depth without a heavy, medicinal edge.',
       story: "Dark, resinous Cambodian oud wood, softened with saffron and rose — a modern take on a scent that has anchored South Asian and Middle Eastern perfumery for centuries.",
@@ -181,6 +191,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Vetiver', 'Bergamot'], heart: ['Fig Leaf', 'Green Accord'], base: ['Cedar', 'Musk'] },
       longevity: 5, projection: 'Light',
+      concentration: 'Eau de Parfum', family: 'Green Fresh',
+      characteristics: { Earthy: 35, Woody: 45, Smoky: 10, Fresh: 90, Warm: 20, Musky: 25 },
       occasions: ['Daytime', 'Casual'], seasons: ['Summer', 'Spring'],
       bestFor: 'Anyone who wants an easy, energizing everyday scent.',
       story: "Built around cool vetiver and crushed fig leaf — meant to feel like a walk through wet pine after rain, bottled for the days you want to feel awake.",
@@ -211,6 +223,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Citrus', 'Bergamot'], heart: ['Rose', 'Oud'], base: ['Sandalwood', 'Musk'] },
       longevity: 7, projection: 'Moderate',
+      concentration: 'Pure Perfume Oil (Attar) — 5 Scents', family: 'Mixed Collection',
+      characteristics: { Earthy: 55, Woody: 60, Smoky: 35, Fresh: 40, Warm: 55, Musky: 45 },
       occasions: ['Gifting', 'Discovery'], seasons: ['All Season'],
       bestFor: 'Gifting, or anyone still finding their signature scent.',
       story: "For the undecided — five of our signature attars in travel-friendly 2ml vials, so you (or someone you love) can find a favourite before committing to a full bottle.",
@@ -241,6 +255,8 @@ const PRODUCTS = [
     scent: {
       notes: { top: ['Cardamom'], heart: ['Black Musk'], base: ['Dark Amber'] },
       longevity: 8, projection: 'Strong',
+      concentration: 'Pure Perfume Oil (Attar)', family: 'Animalic Musk',
+      characteristics: { Earthy: 30, Woody: 40, Smoky: 25, Fresh: 5, Warm: 65, Musky: 95 },
       occasions: ['Evening', 'Winter Nights'], seasons: ['Winter'],
       bestFor: 'Those who want a bold, skin-like musk that draws people close.',
       story: "A deep, animalic musk grounded in dark amber and a trace of cardamom — inspired by the rare musk attars once reserved for royal courts.",
