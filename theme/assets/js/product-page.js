@@ -254,7 +254,6 @@
     document.querySelectorAll('[data-pdp-title]').forEach((el) => { el.textContent = product.title; });
     document.querySelectorAll('[data-pdp-doctitle]').forEach((el) => { el.textContent = product.title + ' — ESHYN'; });
     document.querySelectorAll('[data-pdp-og-title]').forEach((el) => { el.setAttribute('content', product.title + ' — ESHYN'); });
-    document.querySelector('[data-pdp-vendor]').textContent = product.vendor;
     const categoryEl = document.querySelector('[data-pdp-category]');
     if (categoryEl) categoryEl.textContent = product.type;
     document.querySelector('[data-pdp-desc]').textContent = product.shortDescription;

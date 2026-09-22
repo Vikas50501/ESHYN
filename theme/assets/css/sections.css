@@ -112,7 +112,6 @@ section { position: relative; }
   color: var(--color-primary);
 }
 .product-info__category::before { content: ''; width: 1.1rem; height: 1px; background: var(--gradient-gold); }
-.product-info__vendor { display: block; margin-top: 0.5rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
 .product-info h1 { margin-top: 0.3rem; font-size: var(--fs-2xl); }
 .product-info .rating { margin-top: var(--space-sm); }
 .product-info__badges { display: flex; gap: 0.4rem; margin-top: var(--space-sm); }
@@ -200,18 +199,23 @@ section { position: relative; }
 .offers-carousel__track { position: relative; flex: 1; min-width: 0; height: 1.1rem; }
 .offers-carousel__slide {
   position: absolute; inset: 0;
-  display: flex; align-items: baseline; gap: 0.35rem;
+  /* Plain block-level truncation, not flex — text-overflow:ellipsis only
+     reliably truncates a single inline text run in the box that owns
+     overflow:hidden; wrapping the strong+text pair in a flex row (the
+     previous approach) made longer offers overflow and get hard-clipped
+     instead of ellipsizing, which read as the offer being half-missing. */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--fs-xs);
+  line-height: 1.1rem;
   color: var(--color-text-secondary);
   opacity: 0;
   transform: translateY(3px);
   transition: opacity var(--duration-slow) var(--ease-standard), transform var(--duration-slow) var(--ease-standard);
 }
 .offers-carousel__slide.is-active { opacity: 1; transform: translateY(0); }
-.offers-carousel__slide strong { font-weight: 600; color: var(--color-text); flex-shrink: 0; }
+.offers-carousel__slide strong { font-weight: 600; color: var(--color-text); margin-right: 0.35rem; }
 /* Active dot grows into a short pill rather than just swapping color —
    a small, familiar "story progress" cue that this is auto-advancing. */
 .offers-carousel__dots { display: flex; gap: 0.3rem; flex-shrink: 0; }
