@@ -203,10 +203,12 @@ section { position: relative; }
   gap: var(--space-lg);
   overflow-x: auto;
   padding-bottom: 0.25rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .notes-strip__row::-webkit-scrollbar { display: none; }
-.notes-strip__note { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex-shrink: 0; width: 4.5rem; text-align: center; }
+.notes-strip__note { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex-shrink: 0; width: 4.5rem; text-align: center; scroll-snap-align: start; }
 .notes-strip__swatch {
   width: 3.25rem; height: 3.25rem;
   display: flex; align-items: center; justify-content: center;
@@ -214,8 +216,12 @@ section { position: relative; }
   background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
   color: var(--tint, var(--color-primary));
+  overflow: hidden;
 }
 .notes-strip__swatch svg { width: 1.3rem; height: 1.3rem; }
+/* When a note has real/placeholder photography, the image fills the
+   circle edge-to-edge instead of sitting on a flat tinted background. */
+.notes-strip__swatch--photo { border-color: transparent; }
 .notes-strip__name { font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--ls-wide); color: var(--color-text); }
 .notes-strip__tier { font-family: var(--font-accent); font-style: italic; font-size: var(--fs-xs); color: var(--color-text-muted); }
 
@@ -335,6 +341,11 @@ section { position: relative; }
   position: absolute;
   top: var(--announcement-height); left: 0; right: 0;
 }
+/* .icon-btn sets its own color rather than inheriting, so the overlay
+   header's light color needs to reach it explicitly — otherwise the nav
+   links go white (inherited) while the icons stay dark (their own rule
+   wins over inheritance). */
+.site-header--overlay .icon-btn { color: var(--color-text-on-dark); }
 .site-header--overlay .icon-btn:hover { background: rgba(243, 236, 226, 0.12); }
 .site-header--overlay .site-header__logo span { color: var(--color-text-on-dark-muted); }
 .site-header--overlay.is-stuck {
@@ -343,6 +354,7 @@ section { position: relative; }
   background: var(--color-background);
   color: var(--color-text);
 }
+.site-header--overlay.is-stuck .icon-btn { color: var(--color-text); }
 .site-header--overlay.is-stuck .site-header__logo span { color: var(--color-text-muted); }
 .site-header--overlay.is-stuck .icon-btn:hover { background: var(--color-surface-alt); }
 

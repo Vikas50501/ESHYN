@@ -145,15 +145,22 @@
     if (!scent || !scent.notes) { if (strip) strip.style.display = 'none'; return; }
     if (strip) strip.style.display = '';
 
+    const images = scent.noteImages || {};
     wrap.innerHTML = ['top', 'heart', 'base']
       .flatMap((tier) => scent.notes[tier].map((name) => ({ name, tier })))
       .map(({ name, tier }) => {
         const meta = NOTE_TIER_META[tier];
+        const tone = images[name];
+        // A note with an assigned tone gets a photographic swatch (the
+        // shared placeholder-photo system, standing in for real ingredient
+        // photography); otherwise it falls back to the tinted icon so
+        // every note still renders even before an image is curated for it.
+        const swatch = tone
+          ? `<span class="notes-strip__swatch notes-strip__swatch--photo">${window.esPlaceholder(tone, name)}</span>`
+          : `<span class="notes-strip__swatch" style="--tint:${meta.tint}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">${meta.icon}</svg></span>`;
         return `
           <div class="notes-strip__note">
-            <span class="notes-strip__swatch" style="--tint:${meta.tint}">
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">${meta.icon}</svg>
-            </span>
+            ${swatch}
             <span class="notes-strip__name">${name}</span>
             <span class="notes-strip__tier">${meta.label}</span>
           </div>

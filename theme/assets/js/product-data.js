@@ -26,6 +26,7 @@ const PRODUCTS = [
     collections: ['attars', 'bestsellers'],
     scent: {
       notes: { top: ['Citrus', 'Green Leaf'], heart: ['Wet Earth', 'Rose'], base: ['Sandalwood', 'Musk'] },
+      noteImages: { Citrus: 'terracotta', 'Green Leaf': 'olive', 'Wet Earth': 'gold', Rose: 'espresso', Sandalwood: 'clay', Musk: 'blush' },
       longevity: 8, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Earthy Woody',
       characteristics: { Earthy: 95, Woody: 60, Smoky: 55, Fresh: 25, Warm: 70, Musky: 50 },
@@ -59,6 +60,7 @@ const PRODUCTS = [
     collections: ['attars', 'bestsellers'],
     scent: {
       notes: { top: ['Bergamot'], heart: ['Rose', 'Saffron'], base: ['Mysore Sandalwood', 'Amber'] },
+      noteImages: { Bergamot: 'terracotta', Rose: 'olive', Saffron: 'gold', 'Mysore Sandalwood': 'espresso', Amber: 'clay' },
       longevity: 9, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Woody Creamy',
       characteristics: { Earthy: 40, Woody: 95, Smoky: 20, Fresh: 15, Warm: 75, Musky: 45 },
@@ -92,6 +94,7 @@ const PRODUCTS = [
     collections: ['attars'],
     scent: {
       notes: { top: ['Green Leaf', 'Litchi'], heart: ['Damask Rose', 'Mogra'], base: ['Musk', 'Sandalwood'] },
+      noteImages: { 'Green Leaf': 'terracotta', Litchi: 'olive', 'Damask Rose': 'gold', Mogra: 'espresso', Musk: 'clay', Sandalwood: 'blush' },
       longevity: 6, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Floral',
       characteristics: { Earthy: 20, Woody: 35, Smoky: 5, Fresh: 55, Warm: 40, Musky: 30 },
@@ -125,6 +128,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum', 'new-arrivals'],
     scent: {
       notes: { top: ['Bergamot', 'Pink Pepper'], heart: ['Champa Blossom', 'Ylang Ylang'], base: ['Musk', 'Vanilla Bean'] },
+      noteImages: { Bergamot: 'terracotta', 'Pink Pepper': 'olive', 'Champa Blossom': 'gold', 'Ylang Ylang': 'espresso', Musk: 'clay', 'Vanilla Bean': 'blush' },
       longevity: 7, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Eau de Parfum', family: 'Floral Gourmand',
       characteristics: { Earthy: 15, Woody: 30, Smoky: 10, Fresh: 35, Warm: 70, Musky: 55 },
@@ -158,6 +162,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum'],
     scent: {
       notes: { top: ['Saffron', 'Rose'], heart: ['Cambodian Oud', 'Amber'], base: ['Musk', 'Sandalwood'] },
+      noteImages: { Saffron: 'terracotta', Rose: 'olive', 'Cambodian Oud': 'gold', Amber: 'espresso', Musk: 'clay', Sandalwood: 'blush' },
       longevity: 9, projection: 'Strong', intensity: 'Strong',
       concentration: 'Eau de Parfum', family: 'Oud Woody',
       characteristics: { Earthy: 45, Woody: 85, Smoky: 65, Fresh: 15, Warm: 75, Musky: 60 },
@@ -190,6 +195,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum', 'new-arrivals'],
     scent: {
       notes: { top: ['Vetiver', 'Bergamot'], heart: ['Fig Leaf', 'Green Accord'], base: ['Cedar', 'Musk'] },
+      noteImages: { Vetiver: 'terracotta', Bergamot: 'olive', 'Fig Leaf': 'gold', 'Green Accord': 'espresso', Cedar: 'clay', Musk: 'blush' },
       longevity: 5, projection: 'Light', intensity: 'Light',
       concentration: 'Eau de Parfum', family: 'Green Fresh',
       characteristics: { Earthy: 35, Woody: 45, Smoky: 10, Fresh: 90, Warm: 20, Musky: 25 },
@@ -222,6 +228,7 @@ const PRODUCTS = [
     collections: ['gifting', 'bestsellers'],
     scent: {
       notes: { top: ['Citrus', 'Bergamot'], heart: ['Rose', 'Oud'], base: ['Sandalwood', 'Musk'] },
+      noteImages: { Citrus: 'terracotta', Bergamot: 'olive', Rose: 'gold', Oud: 'espresso', Sandalwood: 'clay', Musk: 'blush' },
       longevity: 7, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Pure Perfume Oil (Attar) — 5 Scents', family: 'Mixed Collection',
       characteristics: { Earthy: 55, Woody: 60, Smoky: 35, Fresh: 40, Warm: 55, Musky: 45 },
@@ -254,6 +261,7 @@ const PRODUCTS = [
     collections: ['attars'],
     scent: {
       notes: { top: ['Cardamom'], heart: ['Black Musk'], base: ['Dark Amber'] },
+      noteImages: { Cardamom: 'terracotta', 'Black Musk': 'olive', 'Dark Amber': 'gold' },
       longevity: 8, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Animalic Musk',
       characteristics: { Earthy: 30, Woody: 40, Smoky: 25, Fresh: 5, Warm: 65, Musky: 95 },
