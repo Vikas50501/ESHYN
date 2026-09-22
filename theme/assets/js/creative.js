@@ -109,6 +109,24 @@
     });
   }
 
+  /* ---------------- Offers card auto-carousel ---------------- */
+  function initOffersCarousel() {
+    const track = document.querySelector('[data-offers-track]');
+    if (!track) return;
+    const slides = Array.from(track.querySelectorAll('.offers-carousel__slide'));
+    const dots = Array.from(document.querySelectorAll('[data-offers-dots] > *'));
+    if (slides.length < 2 || reduceMotion()) return;
+
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('is-active');
+      if (dots[i]) dots[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+      if (dots[i]) dots[i].classList.add('is-active');
+    }, 3200);
+  }
+
   /* ---------------- Count-up stats ---------------- */
   function initCountUp() {
     const items = document.querySelectorAll('[data-count-to]');
@@ -385,6 +403,7 @@
     initCustomCursor();
     initScrollProgress();
     initWordCycle();
+    initOffersCarousel();
     initCountUp();
     initProcessScroll();
     initValuesScrollSpy();

@@ -87,14 +87,14 @@
     const p = pdp.product;
     const variant = selectedVariant();
     const priceEl = document.querySelector('[data-pdp-price]');
-    const stockEl = document.querySelector('[data-pdp-stock]');
     const addBtn = document.querySelector('[data-pdp-add]');
+    const buyNowBtn = document.querySelector('[data-pdp-buy-now]');
     const currency = p.pricing.currency;
 
     if (!variant) {
       priceEl.innerHTML = '';
-      stockEl.innerHTML = `<span class="stock-message stock-message--out">Select options</span>`;
       addBtn.setAttribute('disabled', 'true');
+      buyNowBtn.setAttribute('disabled', 'true');
       renderStickyBar();
       return;
     }
@@ -103,14 +103,11 @@
       (variant.compareAtPrice ? `<span class="price-compare">${window.esFormatPrice(variant.compareAtPrice, currency)}</span>` : '');
 
     if (!variant.available) {
-      stockEl.innerHTML = `<span class="stock-message stock-message--out">Out of Stock</span>`;
       addBtn.setAttribute('disabled', 'true');
-    } else if (variant.inventory <= 5) {
-      stockEl.innerHTML = `<span class="stock-message stock-message--low">Only ${variant.inventory} left</span>`;
-      addBtn.removeAttribute('disabled');
+      buyNowBtn.setAttribute('disabled', 'true');
     } else {
-      stockEl.innerHTML = `<span class="stock-message stock-message--in">In Stock</span>`;
       addBtn.removeAttribute('disabled');
+      buyNowBtn.removeAttribute('disabled');
     }
 
     renderStickyBar();
@@ -349,6 +346,13 @@
       const qty = parseInt(document.querySelector('[data-pdp-qty-input]').value, 10) || 1;
       window.esAddToCart(pdp.product, variant, qty);
       window.esOpenCart && window.esOpenCart();
+    });
+    document.querySelector('[data-pdp-buy-now]').addEventListener('click', () => {
+      const variant = selectedVariant();
+      if (!variant || !variant.available) return;
+      const qty = parseInt(document.querySelector('[data-pdp-qty-input]').value, 10) || 1;
+      window.esAddToCart(pdp.product, variant, qty);
+      window.location.href = '/checkout';
     });
   });
 })();

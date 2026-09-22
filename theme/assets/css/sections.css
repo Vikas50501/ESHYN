@@ -150,10 +150,15 @@ section { position: relative; }
 .product-info__actions .qty-stepper button:hover { background: var(--color-surface-alt); color: var(--color-primary); }
 .product-info__actions .qty-stepper input { width: 3rem; font-family: var(--font-body); font-weight: 600; font-size: var(--fs-lg); }
 .product-info__wishlist { order: 2; }
-.product-info__actions .btn {
+.product-info__ctas {
   flex: 1 1 100%;
-  min-width: 0;
   order: 3;
+  display: flex;
+  gap: var(--space-md);
+}
+.product-info__ctas .btn {
+  flex: 1 1 0;
+  min-width: 0;
   height: 3.5rem;
   border-radius: var(--radius-md);
   font-size: var(--fs-md);
@@ -161,8 +166,8 @@ section { position: relative; }
   box-shadow: var(--shadow-sm);
   transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
 }
-.product-info__actions .btn:hover { box-shadow: var(--shadow-md); }
-.product-info__actions .btn:active { transform: translateY(1px); }
+.product-info__ctas .btn:hover { box-shadow: var(--shadow-md); }
+.product-info__ctas .btn:active { transform: translateY(1px); }
 /* Unlike .product-card__wishlist (absolutely positioned to float in a
    card's corner), this sits inline in a flex row next to Add to Cart. */
 .product-info__wishlist {
@@ -175,17 +180,45 @@ section { position: relative; }
 .product-info__wishlist:hover { border-color: var(--color-primary); transform: translateY(-2px); }
 .product-info__wishlist svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; transition: fill var(--duration-fast), stroke var(--duration-fast); }
 .product-info__wishlist.is-active svg { fill: var(--color-primary); stroke: var(--color-primary); }
-.product-info .stock-message { margin-top: var(--space-md); font-size: var(--fs-sm); }
-/* A soft pulse on the in-stock dot only — reads as "live" without being
-   distracting, and never applies to the low/out states. */
-.product-info .stock-message--in::before { animation: stock-pulse 2.2s ease-in-out infinite; }
-@keyframes stock-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+/* ---- Available offers card ----
+   A slim single-line strip, not a padded card — same scale as the trust
+   pills above it, so it reads as one more quick fact rather than a
+   separate heavy block. */
+.offers-card {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: var(--space-md);
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+.offers-card__icon { flex-shrink: 0; width: 1rem; height: 1rem; color: var(--color-primary); }
+/* Single-slide auto-carousel: slides stack via position:absolute so the
+   cross-fade never shifts the row's height or the trailing dots. */
+.offers-carousel__track { position: relative; flex: 1; min-width: 0; height: 1.1rem; }
+.offers-carousel__slide {
+  position: absolute; inset: 0;
+  display: flex; align-items: baseline; gap: 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity var(--duration-slow) var(--ease-standard), transform var(--duration-slow) var(--ease-standard);
+}
+.offers-carousel__slide.is-active { opacity: 1; transform: translateY(0); }
+.offers-carousel__slide strong { font-weight: 600; color: var(--color-text); flex-shrink: 0; }
+/* Active dot grows into a short pill rather than just swapping color —
+   a small, familiar "story progress" cue that this is auto-advancing. */
+.offers-carousel__dots { display: flex; gap: 0.3rem; flex-shrink: 0; }
+.offers-carousel__dots span { width: 0.3rem; height: 0.3rem; border-radius: var(--radius-pill); background: var(--color-border); transition: width var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard); }
+.offers-carousel__dots span.is-active { width: 0.85rem; background: var(--color-primary); }
 
 .product-accordions { max-width: 44rem; margin-top: var(--space-2xl); }
-
-.product-info__meta-row { display: flex; flex-direction: column; gap: 0.5rem; margin-top: var(--space-md); }
-.delivery-note { display: flex; align-items: center; gap: 0.5rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
-.delivery-note svg { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--color-text-muted); }
 
 /* A smaller heading variant for sections that don't need to compete with
    the page's two or three true storytelling moments (Fragrance Journey,
@@ -196,7 +229,7 @@ section { position: relative; }
 /* ---- Notes strip: circular swatches with name + tier, visible in the
    purchase column instead of buried in an accordion — for a fragrance,
    the notes are a primary purchase-decision factor, not a detail. ---- */
-.notes-strip { margin-top: var(--space-lg); }
+.notes-strip { margin-top: var(--space-xl); }
 .notes-strip__label { display: block; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
 .notes-strip__row {
   display: flex;
@@ -227,7 +260,7 @@ section { position: relative; }
 
 /* ---- Trust pills: compact checkmark badges for brand claims, replacing
    the old divided icon-strip. ---- */
-.trust-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-lg); }
+.trust-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-xl); }
 .trust-pills__item {
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.45rem 0.85rem;
@@ -252,8 +285,9 @@ section { position: relative; }
   grid-template-columns: repeat(3, auto);
   justify-content: start;
   gap: var(--space-2xl);
-  margin-top: var(--space-lg);
+  margin-top: var(--space-xl);
   padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
   max-width: none;
   margin-inline: 0;
 }
