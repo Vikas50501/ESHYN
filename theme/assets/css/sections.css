@@ -183,87 +183,92 @@ section { position: relative; }
 
 .product-accordions { max-width: 44rem; margin-top: var(--space-2xl); }
 
-/* ---- Feature highlight cards ----
-   Replaces the old plain-text trust strip: small bordered cards with an
-   icon, arranged to wrap naturally rather than needing an internal
-   horizontal scroll. */
-.feature-highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; margin-top: var(--space-xl); }
+.product-info__meta-row { display: flex; flex-direction: column; gap: 0.5rem; margin-top: var(--space-md); }
+.delivery-note { display: flex; align-items: center; gap: 0.5rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.delivery-note svg { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--color-text-muted); }
+
+/* A smaller heading variant for sections that don't need to compete with
+   the page's two or three true storytelling moments (Fragrance Journey,
+   the Story). Keeps "every section has a huge heading" from flattening
+   the hierarchy the brief specifically called out. */
+.section-head__text--compact h2 { font-size: var(--fs-xl); }
+
+/* ---- Why You'll Love It ----
+   A slim, borderless strip directly under the purchase area — icon +
+   label pairs separated by hairline dividers, not five bordered cards. */
+.loveit { padding-block: var(--space-lg); border-bottom: 1px solid var(--color-border); }
+.loveit__label { display: block; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
+.feature-highlights { display: flex; flex-wrap: wrap; }
 .feature-highlights__card {
-  display: flex; flex-direction: column; gap: 0.6rem;
-  padding: var(--space-md);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.4rem var(--space-lg) 0.4rem 0;
+  margin-right: var(--space-lg);
+  border-right: 1px solid var(--color-border);
 }
-.feature-highlights__card:hover { transform: translateY(-3px); border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
-.feature-highlights__icon { width: 1.6rem; height: 1.6rem; color: var(--color-primary); }
-.feature-highlights__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text); line-height: 1.3; }
+.feature-highlights__card:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.feature-highlights__icon { width: 1.35rem; height: 1.35rem; color: var(--color-primary); flex-shrink: 0; }
+.feature-highlights__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text); white-space: nowrap; }
 
-/* ---- Fragrance details (longevity / sillage / concentration / family) ---- */
-.fragrance-meta { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-top: var(--space-2xl); }
-.fragrance-meta__item { padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); transition: border-color var(--duration-base), box-shadow var(--duration-base); }
-.fragrance-meta__item:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
-.fragrance-meta__icon { width: 1.5rem; height: 1.5rem; color: var(--color-accent); }
-.fragrance-meta__label { display: block; margin-top: var(--space-sm); font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
-.fragrance-meta__value { display: block; margin-top: 0.5rem; font-family: var(--font-display); font-size: var(--fs-lg); }
-.fragrance-meta__meter { height: 4px; border-radius: var(--radius-pill); background: var(--color-border); margin-top: var(--space-sm); overflow: hidden; }
-.fragrance-meta__meter-fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); }
-.fragrance-meta__item p { margin-top: 0.5rem; font-size: var(--fs-sm); color: var(--color-text-secondary); }
-.fragrance-meta__item--best-for { grid-column: 1 / -1; background: var(--color-surface-alt); }
+/* ---- Fragrance Journey: compact stat row (Family / Intensity / Sillage /
+   Longevity) — replaces the old 5-card meta grid with a single quiet row
+   beneath the scent pyramid, plus the characteristic bars below it. ---- */
+.scent-stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border); max-width: 40rem; margin-inline: auto; }
+.scent-stat { text-align: center; }
+.scent-stat__label { display: block; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
+.scent-stat__value { display: block; margin-top: 0.35rem; font-family: var(--font-display); font-size: var(--fs-md); }
 
-.fragrance-tags { display: flex; flex-wrap: wrap; gap: var(--space-2xl); margin-top: var(--space-xl); }
-.fragrance-tags__group { display: flex; flex-direction: column; gap: 0.6rem; }
-.fragrance-tags__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); }
-.fragrance-tags__list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-/* ---- How it smells (scent-characteristic bars) ---- */
-.scent-characteristics { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); margin-top: var(--space-2xl); max-width: 34rem; margin-inline: auto; }
+/* ---- Scent characteristic bars ---- */
+.scent-characteristics { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); margin-top: var(--space-xl); max-width: 34rem; margin-inline: auto; }
 .characteristic { display: grid; grid-template-columns: 6rem 1fr; align-items: center; gap: var(--space-md); }
 .characteristic__label { font-size: var(--fs-sm); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-secondary); }
 .characteristic__track { height: 6px; border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; }
-.characteristic__fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); }
+.characteristic__fill { height: 100%; background: var(--gradient-gold); border-radius: var(--radius-pill); transition: width 1s var(--ease-out); }
 
-/* ---- When to wear it ---- */
-.occasion-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); margin-top: var(--space-xl); }
-.occasion-card {
-  padding: var(--space-lg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  text-align: center;
-  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
-}
-.occasion-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.occasion-card.is-suited { border-color: var(--color-primary); background: var(--color-surface-alt); }
-.occasion-card__icon { width: 2rem; height: 2rem; margin-inline: auto; color: var(--color-primary); }
-.occasion-card__title { margin-top: var(--space-sm); font-family: var(--font-display); font-size: var(--fs-md); }
-.occasion-card__desc { margin-top: 0.3rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
-.occasion-card__badge { display: none; margin-top: var(--space-sm); font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-primary); }
-.occasion-card.is-suited .occasion-card__badge { display: block; }
+/* ---- When to wear it: a compact icon strip, not four padded cards ---- */
+.occasion-strip { padding-block: var(--space-2xl); }
+.occasion-strip__label { display: block; text-align: center; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-xl); }
+.occasion-strip__row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); }
+.occasion-card { text-align: center; transition: opacity var(--duration-base) var(--ease-standard); }
+.occasion-card__icon { width: 1.75rem; height: 1.75rem; margin-inline: auto; color: var(--color-primary); }
+.occasion-card__title { display: block; margin-top: var(--space-sm); font-family: var(--font-display); font-size: var(--fs-md); }
+.occasion-card__desc { display: block; margin-top: 0.25rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.occasion-card__badge { display: none; }
+.occasion-card.is-suited .occasion-card__icon { color: var(--color-accent); }
+.occasion-card.is-suited .occasion-card__title::after { content: ' ✓'; color: var(--color-primary); }
 
-/* ---- Trust & authenticity (distinct from the compact feature-highlight
-   cards near the CTA — larger, more editorial, placed as its own moment
-   ahead of reviews) ---- */
-.trust-cards { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); margin-top: var(--space-xl); }
-.trust-card { text-align: center; padding: var(--space-xl) var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-standard); }
-.trust-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.trust-card__icon-wrap { width: 3.25rem; height: 3.25rem; margin-inline: auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--gradient-gold); }
-.trust-card__icon-wrap svg { width: 1.5rem; height: 1.5rem; color: var(--color-surface-dark); }
-.trust-card__title { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-md); }
-.trust-card__desc { margin-top: 0.4rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
+/* ---- Crafted With Integrity: one compact strip, understandable in a
+   glance — not five editorial cards repeating the CTA-area highlights. ---- */
+.trust-strip-section { padding-block: var(--space-xl); }
+.trust-strip-section__label { display: block; text-align: center; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-lg); }
+.trust-strip-section__row { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg) var(--space-2xl); }
+.trust-strip-section__item { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--fs-sm); font-weight: 500; color: var(--color-text-secondary); }
+.trust-strip-section__item svg { width: 1.1rem; height: 1.1rem; color: var(--color-primary); flex-shrink: 0; }
 
-/* ---- Product story (editorial spread, product-specific) ---- */
+/* ---- Product story: asymmetric editorial spread, not centered text
+   floating in empty space — the image bleeds wider than the text column
+   and the two overlap slightly on desktop (see responsive.css). ---- */
+.product-story { overflow: hidden; }
 .product-story__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); align-items: center; }
 .product-story__media { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden; }
 .product-story__content h2 { margin-top: var(--space-sm); font-size: var(--fs-2xl); }
 .product-story__text { margin-top: var(--space-lg); font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem); line-height: var(--lh-snug); color: var(--color-text-secondary); }
 
-/* ---- How to apply ---- */
-.how-to-apply__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); margin-top: var(--space-xl); }
-.how-to-apply__num { font-family: var(--font-display); font-size: var(--fs-2xl); color: var(--color-accent); }
-.how-to-apply__step h3 { margin-top: var(--space-sm); font-size: var(--fs-lg); }
-.how-to-apply__step p { margin-top: var(--space-sm); color: var(--color-text-secondary); font-size: var(--fs-sm); }
+/* ---- How to apply: a connected horizontal timeline ---- */
+.apply-timeline { position: relative; display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); margin-top: var(--space-2xl); max-width: 52rem; margin-inline: auto; }
+.apply-timeline__step { position: relative; text-align: center; }
+.apply-timeline__num {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem;
+  margin-inline: auto;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-accent);
+  font-family: var(--font-display); font-size: var(--fs-sm);
+  color: var(--color-primary);
+  background: var(--color-background);
+  position: relative; z-index: 1;
+}
+.apply-timeline__step h3 { margin-top: var(--space-md); font-size: var(--fs-lg); }
+.apply-timeline__step p { margin-top: var(--space-sm); color: var(--color-text-secondary); font-size: var(--fs-sm); max-width: 16rem; margin-inline: auto; }
 
 /* ---- Reviews ---- */
 .review-summary { display: flex; align-items: center; gap: var(--space-md); flex-shrink: 0; }
@@ -275,6 +280,29 @@ section { position: relative; }
 .review-card p { margin-top: var(--space-md); font-family: var(--font-display); font-size: var(--fs-md); line-height: var(--lh-snug); }
 .review-card__meta { margin-top: var(--space-lg); display: flex; align-items: center; gap: 0.4rem; font-size: var(--fs-xs); color: var(--color-text-muted); }
 .review-card__meta svg { width: 0.75rem; height: 0.75rem; color: var(--color-success); }
+
+/* ---- Sticky purchase bar ----
+   Hidden by default; product-page.js toggles .is-visible once the hero's
+   own Add to Cart row scrolls out of view, so the purchase action is
+   always reachable without floating over the hero itself. */
+.sticky-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: var(--z-header);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -8px 24px rgba(37, 27, 20, 0.08);
+  transform: translateY(100%);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+.sticky-bar.is-visible { transform: translateY(0); }
+.sticky-bar__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-sm); }
+.sticky-bar__product { display: flex; align-items: center; gap: var(--space-sm); min-width: 0; }
+.sticky-bar__thumb { width: 2.75rem; height: 2.75rem; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; }
+.sticky-bar__id { display: flex; flex-direction: column; min-width: 0; }
+.sticky-bar__name { font-size: var(--fs-sm); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sticky-bar__price { font-family: var(--font-display); font-size: var(--fs-sm); color: var(--color-primary); }
+.sticky-bar__cta { flex-shrink: 0; height: 2.75rem; padding-inline: var(--space-lg); font-size: var(--fs-sm); }
 
 /* ---- Announcement bar ---- */
 .announcement-bar {

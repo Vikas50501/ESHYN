@@ -94,6 +94,7 @@
       priceEl.innerHTML = '';
       stockEl.innerHTML = `<span class="stock-message stock-message--out">Select options</span>`;
       addBtn.setAttribute('disabled', 'true');
+      renderStickyBar();
       return;
     }
 
@@ -110,6 +111,8 @@
       stockEl.innerHTML = `<span class="stock-message stock-message--in">In Stock</span>`;
       addBtn.removeAttribute('disabled');
     }
+
+    renderStickyBar();
   }
 
   /* Fixed brand-wide claims, except longevity which pulls the product's
@@ -218,28 +221,44 @@
 
     const longevityLabels = ['', '1-2 Hours', '2-3 Hours', '3-4 Hours', '4-5 Hours', '5-6 Hours', '6-8 Hours', '6-8 Hours', '8+ Hours', '8+ Hours', 'All Day'];
     const longevityEl = document.querySelector('[data-pdp-longevity-value]');
-    const longevityFill = document.querySelector('[data-pdp-longevity-fill]');
     if (longevityEl) longevityEl.textContent = longevityLabels[scent.longevity] || `${scent.longevity}+ Hours`;
-    if (longevityFill) longevityFill.style.width = Math.min(100, (scent.longevity / 10) * 100) + '%';
 
-    const projectionScale = { Light: 35, Moderate: 65, Strong: 95 };
     const projectionEl = document.querySelector('[data-pdp-projection-value]');
-    const projectionFill = document.querySelector('[data-pdp-projection-fill]');
     if (projectionEl) projectionEl.textContent = scent.projection;
-    if (projectionFill) projectionFill.style.width = (projectionScale[scent.projection] || 60) + '%';
 
-    const concentrationEl = document.querySelector('[data-pdp-concentration]');
-    if (concentrationEl) concentrationEl.textContent = scent.concentration;
+    const intensityEl = document.querySelector('[data-pdp-intensity]');
+    if (intensityEl) intensityEl.textContent = scent.intensity || scent.projection;
+
     const familyEl = document.querySelector('[data-pdp-family]');
     if (familyEl) familyEl.textContent = scent.family;
+  }
 
-    const bestForEl = document.querySelector('[data-pdp-best-for]');
-    if (bestForEl) bestForEl.textContent = scent.bestFor;
+  /* Truthful, per-product answers for the three FAQ items that depend on
+     this product's own scent data rather than fixed brand copy. */
+  function renderFaq() {
+    const scent = pdp.product.scent;
+    if (!scent) return;
 
-    const occasionsEl = document.querySelector('[data-pdp-occasions]');
-    if (occasionsEl) occasionsEl.innerHTML = scent.occasions.map((o) => `<span class="chip">${o}</span>`).join('');
-    const seasonsEl = document.querySelector('[data-pdp-seasons]');
-    if (seasonsEl) seasonsEl.innerHTML = scent.seasons.map((s) => `<span class="chip">${s}</span>`).join('');
+    const longevityLabels = ['', '1-2 hours', '2-3 hours', '3-4 hours', '4-5 hours', '5-6 hours', '6-8 hours', '6-8 hours', '8+ hours', '8+ hours', 'all day'];
+    const longevityEl = document.querySelector('[data-pdp-faq-longevity]');
+    if (longevityEl) {
+      longevityEl.textContent = `${pdp.product.title} lasts around ${longevityLabels[scent.longevity] || `${scent.longevity}+ hours`} on skin, with ${scent.projection.toLowerCase()} sillage as it develops through the day.`;
+    }
+
+    const smellEl = document.querySelector('[data-pdp-faq-smell]');
+    if (smellEl && scent.notes) {
+      const familyLower = scent.family.toLowerCase();
+      const article = /^[aeiou]/.test(familyLower) ? 'An' : 'A';
+      smellEl.textContent = `${article} ${familyLower} fragrance that opens with ${scent.notes.top.join(' and ')}, settles into ${scent.notes.heart.join(' and ')}, and finishes with a lasting ${scent.notes.base.join(' and ')} base.`;
+    }
+
+    const everydayEl = document.querySelector('[data-pdp-faq-everyday]');
+    if (everydayEl) {
+      const suitedForDaily = (scent.occasions || []).some((o) => /daily|casual|daytime/i.test(o));
+      everydayEl.textContent = suitedForDaily
+        ? `Yes — its ${scent.projection.toLowerCase()} projection is easy to wear close to the skin, making it a natural fit for everyday use.`
+        : `It's best suited to ${(scent.occasions || ['special occasions']).join(', ').toLowerCase()} rather than daily wear, thanks to its ${scent.projection.toLowerCase()} projection.`;
+    }
   }
 
   function renderStory() {
@@ -346,10 +365,49 @@
     renderStory();
     renderReviews();
     renderRelated();
+    renderFaq();
+  }
+
+  /* Populates the sticky bar's product summary; visibility + add-to-cart
+     wiring happens once in initStickyBar() below since the elements
+     themselves don't get re-created on re-render. */
+  function renderStickyBar() {
+    const p = pdp.product;
+    const variant = selectedVariant();
+    const thumbEl = document.querySelector('[data-pdp-sticky-thumb]');
+    const priceEl = document.querySelector('[data-pdp-sticky-price]');
+    const addBtn = document.querySelector('[data-pdp-sticky-add]');
+    if (thumbEl) thumbEl.innerHTML = window.esPlaceholder(p.media[0], '', p.type === 'Gift Set' ? 'gift' : 'bottle');
+    if (priceEl) priceEl.textContent = variant ? window.esFormatPrice(variant.price, p.pricing.currency) : '';
+    if (addBtn) addBtn.toggleAttribute('disabled', !variant || !variant.available);
+  }
+
+  /* Shows the sticky bar once the hero's own purchase controls scroll out
+     of view, so the CTA stays reachable without duplicating it on-screen
+     the whole time. */
+  function initStickyBar() {
+    const trigger = document.querySelector('[data-pdp-sticky-trigger]');
+    const bar = document.querySelector('[data-pdp-sticky-bar]');
+    if (!trigger || !bar || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      bar.classList.toggle('is-visible', !entry.isIntersecting);
+    }, { threshold: 0 });
+    observer.observe(trigger);
+
+    document.querySelector('[data-pdp-sticky-add]').addEventListener('click', () => {
+      const variant = selectedVariant();
+      if (!variant || !variant.available) return;
+      const qtyInput = document.querySelector('[data-pdp-qty-input]');
+      const qty = parseInt(qtyInput ? qtyInput.value : '1', 10) || 1;
+      window.esAddToCart(pdp.product, variant, qty);
+      window.esOpenCart && window.esOpenCart();
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     render();
+    initStickyBar();
 
     document.querySelector('[data-pdp-qty-decrease]').addEventListener('click', () => {
       const input = document.querySelector('[data-pdp-qty-input]');

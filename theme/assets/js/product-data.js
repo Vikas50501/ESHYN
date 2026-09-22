@@ -26,7 +26,7 @@ const PRODUCTS = [
     collections: ['attars', 'bestsellers'],
     scent: {
       notes: { top: ['Citrus', 'Green Leaf'], heart: ['Wet Earth', 'Rose'], base: ['Sandalwood', 'Musk'] },
-      longevity: 8, projection: 'Strong',
+      longevity: 8, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Earthy Woody',
       characteristics: { Earthy: 95, Woody: 60, Smoky: 55, Fresh: 25, Warm: 70, Musky: 50 },
       occasions: ['Evening', 'Festive'], seasons: ['Monsoon', 'Winter'],
@@ -59,7 +59,7 @@ const PRODUCTS = [
     collections: ['attars', 'bestsellers'],
     scent: {
       notes: { top: ['Bergamot'], heart: ['Rose', 'Saffron'], base: ['Mysore Sandalwood', 'Amber'] },
-      longevity: 9, projection: 'Strong',
+      longevity: 9, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Woody Creamy',
       characteristics: { Earthy: 40, Woody: 95, Smoky: 20, Fresh: 15, Warm: 75, Musky: 45 },
       occasions: ['Daily Wear', 'Formal'], seasons: ['All Season', 'Winter'],
@@ -92,7 +92,7 @@ const PRODUCTS = [
     collections: ['attars'],
     scent: {
       notes: { top: ['Green Leaf', 'Litchi'], heart: ['Damask Rose', 'Mogra'], base: ['Musk', 'Sandalwood'] },
-      longevity: 6, projection: 'Moderate',
+      longevity: 6, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Floral',
       characteristics: { Earthy: 20, Woody: 35, Smoky: 5, Fresh: 55, Warm: 40, Musky: 30 },
       occasions: ['Daytime', 'Wedding'], seasons: ['Spring', 'Summer'],
@@ -125,7 +125,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum', 'new-arrivals'],
     scent: {
       notes: { top: ['Bergamot', 'Pink Pepper'], heart: ['Champa Blossom', 'Ylang Ylang'], base: ['Musk', 'Vanilla Bean'] },
-      longevity: 7, projection: 'Moderate',
+      longevity: 7, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Eau de Parfum', family: 'Floral Gourmand',
       characteristics: { Earthy: 15, Woody: 30, Smoky: 10, Fresh: 35, Warm: 70, Musky: 55 },
       occasions: ['Evening', 'Date Night'], seasons: ['Autumn', 'Winter'],
@@ -158,7 +158,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum'],
     scent: {
       notes: { top: ['Saffron', 'Rose'], heart: ['Cambodian Oud', 'Amber'], base: ['Musk', 'Sandalwood'] },
-      longevity: 9, projection: 'Strong',
+      longevity: 9, projection: 'Strong', intensity: 'Strong',
       concentration: 'Eau de Parfum', family: 'Oud Woody',
       characteristics: { Earthy: 45, Woody: 85, Smoky: 65, Fresh: 15, Warm: 75, Musky: 60 },
       occasions: ['Evening', 'Festive'], seasons: ['Winter', 'Autumn'],
@@ -190,7 +190,7 @@ const PRODUCTS = [
     collections: ['eau-de-parfum', 'new-arrivals'],
     scent: {
       notes: { top: ['Vetiver', 'Bergamot'], heart: ['Fig Leaf', 'Green Accord'], base: ['Cedar', 'Musk'] },
-      longevity: 5, projection: 'Light',
+      longevity: 5, projection: 'Light', intensity: 'Light',
       concentration: 'Eau de Parfum', family: 'Green Fresh',
       characteristics: { Earthy: 35, Woody: 45, Smoky: 10, Fresh: 90, Warm: 20, Musky: 25 },
       occasions: ['Daytime', 'Casual'], seasons: ['Summer', 'Spring'],
@@ -222,7 +222,7 @@ const PRODUCTS = [
     collections: ['gifting', 'bestsellers'],
     scent: {
       notes: { top: ['Citrus', 'Bergamot'], heart: ['Rose', 'Oud'], base: ['Sandalwood', 'Musk'] },
-      longevity: 7, projection: 'Moderate',
+      longevity: 7, projection: 'Moderate', intensity: 'Moderate',
       concentration: 'Pure Perfume Oil (Attar) — 5 Scents', family: 'Mixed Collection',
       characteristics: { Earthy: 55, Woody: 60, Smoky: 35, Fresh: 40, Warm: 55, Musky: 45 },
       occasions: ['Gifting', 'Discovery'], seasons: ['All Season'],
@@ -254,7 +254,7 @@ const PRODUCTS = [
     collections: ['attars'],
     scent: {
       notes: { top: ['Cardamom'], heart: ['Black Musk'], base: ['Dark Amber'] },
-      longevity: 8, projection: 'Strong',
+      longevity: 8, projection: 'Strong', intensity: 'Strong',
       concentration: 'Pure Perfume Oil (Attar)', family: 'Animalic Musk',
       characteristics: { Earthy: 30, Woody: 40, Smoky: 25, Fresh: 5, Warm: 65, Musky: 95 },
       occasions: ['Evening', 'Winter Nights'], seasons: ['Winter'],
