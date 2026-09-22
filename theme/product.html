@@ -233,6 +233,12 @@
 
           <p class="product-info__desc font-accent" data-pdp-desc></p>
 
+          <div class="scent-stat-row scent-stat-row--compact" data-pdp-fragrance-facts>
+            <div class="scent-stat"><span class="scent-stat__label">Family</span><span class="scent-stat__value" data-pdp-family></span></div>
+            <div class="scent-stat"><span class="scent-stat__label">Longevity</span><span class="scent-stat__value" data-pdp-longevity-value></span></div>
+            <div class="scent-stat"><span class="scent-stat__label">Sillage</span><span class="scent-stat__value" data-pdp-projection-value></span></div>
+          </div>
+
           <div class="product-info__options" data-pdp-options></div>
 
           <div class="product-info__actions" data-pdp-sticky-trigger>
@@ -260,6 +266,18 @@
               <div class="accordion-panel"><div class="accordion-panel__inner" data-pdp-accordion-desc>Every ESHYN fragrance is hand-distilled in Kannauj using the deg-bhapka method — copper vessels, wood fires, and weeks of patience instead of synthetic shortcuts. No alcohol, no fillers, just oil, botanical extract, and time.</div></div>
             </div>
             <div class="accordion-item">
+              <button type="button" class="accordion-trigger"><span>Fragrance Notes</span><span class="accordion-icon"></span></button>
+              <div class="accordion-panel"><div class="accordion-panel__inner" data-pdp-accordion-notes></div></div>
+            </div>
+            <div class="accordion-item">
+              <button type="button" class="accordion-trigger"><span>How to Use</span><span class="accordion-icon"></span></button>
+              <div class="accordion-panel"><div class="accordion-panel__inner">
+                <p><strong>01 · Prepare</strong> — Apply to clean, moisturized skin.</p>
+                <p><strong>02 · Apply</strong> — Target pulse points such as wrists and neck.</p>
+                <p><strong>03 · Let It Evolve</strong> — Allow the fragrance to naturally develop on skin.</p>
+              </div></div>
+            </div>
+            <div class="accordion-item">
               <button type="button" class="accordion-trigger"><span>Ingredients</span><span class="accordion-icon"></span></button>
               <div class="accordion-panel"><div class="accordion-panel__inner">Pure botanical oil extract, sandalwood oil base. No alcohol, no synthetic fragrance, no parabens. Patch test recommended before first use.</div></div>
             </div>
@@ -278,115 +296,6 @@
     <div class="container">
       <span class="loveit__label">Why You'll Love It</span>
       <div class="loveit__row" data-pdp-feature-highlights></div>
-    </div>
-  </section>
-
-  <!-- ---- The Fragrance Journey (scent pyramid + profile, one storytelling moment) ---- -->
-  <section class="section section--alt" style="position:relative; overflow:hidden;">
-    <span class="section-numeral" style="top:-2rem; right:3%;" aria-hidden="true">02</span>
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <div class="section-head__text" style="max-width:none; text-align:center; margin-inline:auto">
-          <span class="eyebrow" style="justify-content:center">Scent Progression</span>
-          <h2 class="font-accent" style="font-style:italic; font-weight:500;">Opening → Heart → Dry Down</h2>
-          <p class="lede" style="margin-inline:auto; text-align:center">How <span data-pdp-title>this fragrance</span> unfolds on skin, note by note.</p>
-        </div>
-      </div>
-
-      <div class="scent-timeline" data-reveal data-scent-timeline>
-        <div class="scent-timeline__track">
-          <button type="button" class="scent-timeline__stop is-active" data-scent-stop="0">
-            <span class="scent-timeline__dot"></span>
-            <span class="scent-timeline__time">0 Min</span>
-          </button>
-          <button type="button" class="scent-timeline__stop" data-scent-stop="1">
-            <span class="scent-timeline__dot"></span>
-            <span class="scent-timeline__time">1–4 Hrs</span>
-          </button>
-          <button type="button" class="scent-timeline__stop" data-scent-stop="2">
-            <span class="scent-timeline__dot"></span>
-            <span class="scent-timeline__time">4+ Hrs</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="scent-grid" data-reveal data-scent-grid data-pdp-scent-grid></div>
-
-      <div class="scent-stat-row" data-reveal>
-        <div class="scent-stat"><span class="scent-stat__label">Family</span><span class="scent-stat__value" data-pdp-family></span></div>
-        <div class="scent-stat"><span class="scent-stat__label">Intensity</span><span class="scent-stat__value" data-pdp-intensity></span></div>
-        <div class="scent-stat"><span class="scent-stat__label">Sillage</span><span class="scent-stat__value" data-pdp-projection-value></span></div>
-        <div class="scent-stat"><span class="scent-stat__label">Longevity</span><span class="scent-stat__value" data-pdp-longevity-value></span></div>
-      </div>
-
-      <div class="scent-characteristics" data-reveal data-pdp-characteristics></div>
-    </div>
-  </section>
-
-  <!-- ---- When to wear it (compact icon strip, not cards) ---- -->
-  <section class="occasion-strip">
-    <div class="container">
-      <span class="occasion-strip__label">When to Wear It</span>
-      <div class="occasion-strip__row" data-pdp-occasion-cards></div>
-    </div>
-  </section>
-
-  <!-- ---- The story behind the scent (asymmetric editorial) ---- -->
-  <section class="section section--alt product-story">
-    <div class="container">
-      <div class="product-story__grid">
-        <figure class="product-story__media shine" data-tilt data-parallax data-reveal>
-          <div data-pdp-story-media></div>
-        </figure>
-        <div class="product-story__content" data-reveal>
-          <span class="eyebrow">The Story</span>
-          <h2>The Story Behind <span data-pdp-title>This Fragrance</span></h2>
-          <p class="product-story__text font-accent" data-pdp-story></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---- How to apply (horizontal connected timeline) ---- -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-head" style="justify-content:center; text-align:center" data-reveal>
-        <div class="section-head__text section-head__text--compact" style="max-width:none; margin-inline:auto; text-align:center">
-          <span class="eyebrow" style="justify-content:center">Ritual</span>
-          <h2>How to Apply</h2>
-        </div>
-      </div>
-      <div class="apply-timeline" data-reveal>
-        <div class="apply-timeline__step">
-          <span class="apply-timeline__num">01</span>
-          <h3>Prepare</h3>
-          <p>Apply to clean, moisturized skin.</p>
-        </div>
-        <div class="apply-timeline__step">
-          <span class="apply-timeline__num">02</span>
-          <h3>Apply</h3>
-          <p>Target pulse points such as wrists and neck.</p>
-        </div>
-        <div class="apply-timeline__step">
-          <span class="apply-timeline__num">03</span>
-          <h3>Let It Evolve</h3>
-          <p>Allow the fragrance to naturally develop on skin.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---- Crafted with integrity (compact trust strip) ---- -->
-  <section class="trust-strip-section section--alt">
-    <div class="container">
-      <span class="trust-strip-section__label">Crafted With Integrity</span>
-      <div class="trust-strip-section__row">
-        <span class="trust-strip-section__item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M4 10l4-4M4 10l4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>Traditional Craft</span>
-        <span class="trust-strip-section__item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3l2 4.5 5 .7-3.6 3.4.8 5-4.2-2.2-4.2 2.2.8-5L3 8.2l5-.7z" stroke-linejoin="round"/></svg>Quality Ingredients</span>
-        <span class="trust-strip-section__item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Carefully Distilled</span>
-        <span class="trust-strip-section__item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5z"/></svg>Skin Conscious</span>
-        <span class="trust-strip-section__item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>Cruelty Free</span>
-      </div>
     </div>
   </section>
 
@@ -444,14 +353,6 @@
         <div class="accordion-item">
           <button type="button" class="accordion-trigger"><span>Is it suitable for sensitive skin?</span><span class="accordion-icon"></span></button>
           <div class="accordion-panel"><div class="accordion-panel__inner">Being alcohol-free makes it gentler than most sprays, but we still recommend a patch test on the inner wrist before first use, as with any concentrated oil.</div></div>
-        </div>
-        <div class="accordion-item">
-          <button type="button" class="accordion-trigger"><span>What does <span data-pdp-title>this fragrance</span> smell like?</span><span class="accordion-icon"></span></button>
-          <div class="accordion-panel"><div class="accordion-panel__inner" data-pdp-faq-smell></div></div>
-        </div>
-        <div class="accordion-item">
-          <button type="button" class="accordion-trigger"><span>Is it suitable for everyday wear?</span><span class="accordion-icon"></span></button>
-          <div class="accordion-panel"><div class="accordion-panel__inner" data-pdp-faq-everyday></div></div>
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-trigger"><span>How should I store the attar?</span><span class="accordion-icon"></span></button>

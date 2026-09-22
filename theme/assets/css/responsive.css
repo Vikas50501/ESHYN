@@ -32,13 +32,6 @@
   .footer__legal { flex-direction: row; }
   .cart-drawer { width: min(26rem, 60vw); }
   .product-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); align-items: start; }
-  .scent-stat-row { grid-template-columns: repeat(4, 1fr); }
-  .product-story__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); }
-  .apply-timeline { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); }
-  /* Connecting line behind the numbered circles — only meaningful once
-     the steps sit in a row. */
-  .apply-timeline::before { content: ''; position: absolute; top: 1.375rem; left: 16.6%; right: 16.6%; height: 1px; background: var(--color-border); }
-  .occasion-strip__row { grid-template-columns: repeat(4, 1fr); }
   .product-reviews__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -50,12 +43,6 @@
      48rem, but the column itself stays narrow until this breakpoint) for
      Add to Cart to share a row with qty + wishlist again. */
   .product-info__actions .btn { flex: 1 1 auto; }
-  /* Asymmetric editorial spread: the image bleeds past the container edge
-     and the text column overlaps it slightly, rather than two centered
-     equal-width panels. */
-  .product-story__grid { grid-template-columns: 1.15fr 1fr; }
-  .product-story__media { margin-left: calc(-1 * var(--container-pad)); }
-  .product-story__content { margin-left: -3rem; padding: var(--space-2xl); background: var(--color-surface); position: relative; z-index: 1; box-shadow: var(--shadow-lg); }
 
   .site-header__row { grid-template-columns: auto 1fr auto; gap: var(--space-lg); }
   .site-header__search,

@@ -11,6 +11,7 @@
 
 (function () {
   const BADGE_LABELS = { new: 'New', sale: 'Sale', bestseller: 'Bestseller', limited: 'Limited Edition' };
+  const LONGEVITY_LABELS = ['', '1-2 Hours', '2-3 Hours', '3-4 Hours', '4-5 Hours', '5-6 Hours', '6-8 Hours', '6-8 Hours', '8+ Hours', '8+ Hours', 'All Day'];
 
   const pdp = { product: null, selected: {} };
 
@@ -121,7 +122,7 @@
     const wrap = document.querySelector('[data-pdp-feature-highlights]');
     if (!wrap) return;
     const scent = pdp.product.scent;
-    const longevityLabel = scent ? `${scent.longevity}+ Hours` : '8+ Hours';
+    const longevityLabel = scent ? (LONGEVITY_LABELS[scent.longevity] || `${scent.longevity}+ Hours`) : '8+ Hours';
     const items = [
       { label: 'Alcohol-Free', icon: '<path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5z"/>' },
       { label: 'Skin-Friendly', icon: '<path d="M10 17s-6-3.6-6-8a4 4 0 018-.4A4 4 0 0116 9c0 4.4-6 8-6 8z"/>' },
@@ -139,134 +140,51 @@
       .join('');
   }
 
-  function renderCharacteristics() {
-    const wrap = document.querySelector('[data-pdp-characteristics]');
-    if (!wrap) return;
-    const chars = pdp.product.scent && pdp.product.scent.characteristics;
-    if (!chars) { wrap.closest('section').style.display = 'none'; return; }
-    wrap.innerHTML = Object.keys(chars)
-      .map((label) => `
-        <div class="characteristic">
-          <span class="characteristic__label">${label}</span>
-          <div class="characteristic__track"><div class="characteristic__fill" style="width:${chars[label]}%"></div></div>
-        </div>
-      `)
-      .join('');
-  }
-
-  /* The four occasion buckets are fixed brand copy; which ones highlight
-     as "suited" is inferred from this product's own occasions/seasons so
-     it stays truthful per-product without needing extra authored data. */
-  function renderOccasionCards() {
-    const wrap = document.querySelector('[data-pdp-occasion-cards]');
+  /* Condenses the notes/occasions storytelling into one accordion panel
+     instead of a dedicated section — same underlying scent data, presented
+     as expandable detail rather than page-length page-real-estate. */
+  function renderAccordionNotes() {
+    const wrap = document.querySelector('[data-pdp-accordion-notes]');
     if (!wrap) return;
     const scent = pdp.product.scent;
-    const occ = (scent && scent.occasions) || [];
-    const seasons = (scent && scent.seasons) || [];
-    const has = (list, ...keys) => keys.some((k) => list.some((v) => v.toLowerCase().includes(k)));
+    if (!scent || !scent.notes) { wrap.textContent = ''; return; }
 
-    const cards = [
-      { title: 'Daily Wear', desc: 'Light, easy, effortless to reach for.', icon: '<path d="M10 3v3M10 14v3M3 10h3M14 10h3" stroke-linecap="round"/><circle cx="10" cy="10" r="4"/>', suited: has(occ, 'daily', 'casual', 'daytime') },
-      { title: 'Office', desc: 'Refined, close to skin, never loud.', icon: '<rect x="4" y="6" width="12" height="10" rx="1"/><path d="M7 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke-linecap="round"/>', suited: has(occ, 'daily', 'formal', 'daytime') },
-      { title: 'Evening', desc: 'Warmer, more expressive after dark.', icon: '<path d="M14 11a5 5 0 11-5-7 4 4 0 005 7z"/>', suited: has(occ, 'evening', 'date', 'night') },
-      { title: 'Special Occasions', desc: 'Festive, celebratory, memorable.', icon: '<path d="M10 3l1.5 3.5L15 8l-3 2 .8 4-2.8-1.8L7.2 14l.8-4-3-2 3.5-1.5z" stroke-linejoin="round"/>', suited: has(occ, 'festive', 'wedding') || has(seasons, 'winter') }
+    const lines = [
+      `<p><strong>Top</strong> — ${scent.notes.top.join(', ')}</p>`,
+      `<p><strong>Heart</strong> — ${scent.notes.heart.join(', ')}</p>`,
+      `<p><strong>Base</strong> — ${scent.notes.base.join(', ')}</p>`
     ];
-
-    wrap.innerHTML = cards
-      .map((c) => `
-        <div class="occasion-card${c.suited ? ' is-suited' : ''}">
-          <svg class="occasion-card__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">${c.icon}</svg>
-          <h3 class="occasion-card__title">${c.title}</h3>
-          <p class="occasion-card__desc">${c.desc}</p>
-          <span class="occasion-card__badge">✓ Great Fit</span>
-        </div>
-      `)
-      .join('');
-  }
-
-  /* Reuses the exact .scent-timeline/.scent-grid/.scent-card markup and
-     copy structure from the homepage's "Anatomy of a Scent" section — same
-     visual language, populated with this product's own notes. creative.js's
-     initScentAnatomy() (already loaded on this page) picks up the timeline
-     ↔ card hover/click sync automatically since it queries generically for
-     [data-scent-timeline]/[data-scent-grid], no extra wiring needed here. */
-  function renderScentPyramid() {
-    const grid = document.querySelector('[data-pdp-scent-grid]');
-    if (!grid) return;
-    const notes = pdp.product.scent && pdp.product.scent.notes;
-    if (!notes) { grid.closest('section').style.display = 'none'; return; }
-
-    const tiers = [
-      { key: 'top', cls: 'scent-card--top', label: 'Top Note — First 15 Minutes', name: 'The Introduction', desc: 'Bright and immediate — the first impression that fades fastest.', notes: notes.top },
-      { key: 'heart', cls: 'scent-card--heart', label: 'Heart Note — Hours 1–4', name: 'The Character', desc: "The fragrance's true identity — rounder, warmer, most memorable.", notes: notes.heart },
-      { key: 'base', cls: 'scent-card--base', label: 'Base Note — Hours 4+', name: 'The Memory', desc: 'Deep and lasting — what lingers on skin and fabric long after.', notes: notes.base }
-    ];
-
-    grid.innerHTML = tiers
-      .map((tier, i) => `
-        <article class="scent-card ${tier.cls}${i === 0 ? ' is-active' : ''}" data-scent-card="${i}">
-          <span class="scent-card__index" aria-hidden="true">0${i + 1}</span>
-          <span class="scent-card__label">${tier.label}</span>
-          <h3 class="scent-card__name">${tier.name}</h3>
-          <p class="scent-card__desc">${tier.desc}</p>
-          <div class="scent-card__notes">${tier.notes.map((n) => `<span>${n}</span>`).join('')}</div>
-        </article>
-      `)
-      .join('');
+    if (scent.occasions && scent.occasions.length) {
+      lines.push(`<p><strong>Best for</strong> — ${scent.occasions.join(', ')}</p>`);
+    }
+    wrap.innerHTML = lines.join('');
   }
 
   function renderFragranceMeta() {
     const scent = pdp.product.scent;
     if (!scent) return;
 
-    const longevityLabels = ['', '1-2 Hours', '2-3 Hours', '3-4 Hours', '4-5 Hours', '5-6 Hours', '6-8 Hours', '6-8 Hours', '8+ Hours', '8+ Hours', 'All Day'];
     const longevityEl = document.querySelector('[data-pdp-longevity-value]');
-    if (longevityEl) longevityEl.textContent = longevityLabels[scent.longevity] || `${scent.longevity}+ Hours`;
+    if (longevityEl) longevityEl.textContent = LONGEVITY_LABELS[scent.longevity] || `${scent.longevity}+ Hours`;
 
     const projectionEl = document.querySelector('[data-pdp-projection-value]');
     if (projectionEl) projectionEl.textContent = scent.projection;
-
-    const intensityEl = document.querySelector('[data-pdp-intensity]');
-    if (intensityEl) intensityEl.textContent = scent.intensity || scent.projection;
 
     const familyEl = document.querySelector('[data-pdp-family]');
     if (familyEl) familyEl.textContent = scent.family;
   }
 
-  /* Truthful, per-product answers for the three FAQ items that depend on
-     this product's own scent data rather than fixed brand copy. */
+  /* Truthful, per-product answer for the one FAQ item that depends on this
+     product's own scent data rather than fixed brand copy. */
   function renderFaq() {
     const scent = pdp.product.scent;
     if (!scent) return;
 
-    const longevityLabels = ['', '1-2 hours', '2-3 hours', '3-4 hours', '4-5 hours', '5-6 hours', '6-8 hours', '6-8 hours', '8+ hours', '8+ hours', 'all day'];
     const longevityEl = document.querySelector('[data-pdp-faq-longevity]');
     if (longevityEl) {
-      longevityEl.textContent = `${pdp.product.title} lasts around ${longevityLabels[scent.longevity] || `${scent.longevity}+ hours`} on skin, with ${scent.projection.toLowerCase()} sillage as it develops through the day.`;
+      const label = (LONGEVITY_LABELS[scent.longevity] || `${scent.longevity}+ Hours`).toLowerCase();
+      longevityEl.textContent = `${pdp.product.title} lasts around ${label} on skin, with ${scent.projection.toLowerCase()} sillage as it develops through the day.`;
     }
-
-    const smellEl = document.querySelector('[data-pdp-faq-smell]');
-    if (smellEl && scent.notes) {
-      const familyLower = scent.family.toLowerCase();
-      const article = /^[aeiou]/.test(familyLower) ? 'An' : 'A';
-      smellEl.textContent = `${article} ${familyLower} fragrance that opens with ${scent.notes.top.join(' and ')}, settles into ${scent.notes.heart.join(' and ')}, and finishes with a lasting ${scent.notes.base.join(' and ')} base.`;
-    }
-
-    const everydayEl = document.querySelector('[data-pdp-faq-everyday]');
-    if (everydayEl) {
-      const suitedForDaily = (scent.occasions || []).some((o) => /daily|casual|daytime/i.test(o));
-      everydayEl.textContent = suitedForDaily
-        ? `Yes — its ${scent.projection.toLowerCase()} projection is easy to wear close to the skin, making it a natural fit for everyday use.`
-        : `It's best suited to ${(scent.occasions || ['special occasions']).join(', ').toLowerCase()} rather than daily wear, thanks to its ${scent.projection.toLowerCase()} projection.`;
-    }
-  }
-
-  function renderStory() {
-    const scent = pdp.product.scent;
-    const mediaEl = document.querySelector('[data-pdp-story-media]');
-    const textEl = document.querySelector('[data-pdp-story]');
-    if (mediaEl) mediaEl.innerHTML = window.esPlaceholder(pdp.product.media[1] || pdp.product.media[0], pdp.product.title, 'vessel');
-    if (textEl) textEl.textContent = scent ? scent.story : pdp.product.shortDescription;
   }
 
   function renderReviews() {
@@ -358,11 +276,8 @@
     renderOptions();
     renderPriceAndStock();
     renderFeatureHighlights();
-    renderScentPyramid();
     renderFragranceMeta();
-    renderCharacteristics();
-    renderOccasionCards();
-    renderStory();
+    renderAccordionNotes();
     renderReviews();
     renderRelated();
     renderFaq();
