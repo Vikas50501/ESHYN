@@ -193,21 +193,46 @@ section { position: relative; }
    the hierarchy the brief specifically called out. */
 .section-head__text--compact h2 { font-size: var(--fs-xl); }
 
-/* ---- Why You'll Love It ----
-   A slim, borderless strip directly under the purchase area — icon +
-   label pairs separated by hairline dividers, not five bordered cards. */
-.loveit { padding-block: var(--space-lg); border-bottom: 1px solid var(--color-border); }
-.loveit__label { display: block; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
-.feature-highlights { display: flex; flex-wrap: wrap; }
-.feature-highlights__card {
-  display: flex; align-items: center; gap: 0.55rem;
-  padding: 0.4rem var(--space-lg) 0.4rem 0;
-  margin-right: var(--space-lg);
-  border-right: 1px solid var(--color-border);
+/* ---- Notes strip: circular swatches with name + tier, visible in the
+   purchase column instead of buried in an accordion — for a fragrance,
+   the notes are a primary purchase-decision factor, not a detail. ---- */
+.notes-strip { margin-top: var(--space-lg); }
+.notes-strip__label { display: block; font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-md); }
+.notes-strip__row {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
 }
-.feature-highlights__card:last-child { border-right: none; margin-right: 0; padding-right: 0; }
-.feature-highlights__icon { width: 1.35rem; height: 1.35rem; color: var(--color-primary); flex-shrink: 0; }
-.feature-highlights__label { font-size: var(--fs-xs); font-weight: 600; letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-text); white-space: nowrap; }
+.notes-strip__row::-webkit-scrollbar { display: none; }
+.notes-strip__note { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex-shrink: 0; width: 4.5rem; text-align: center; }
+.notes-strip__swatch {
+  width: 3.25rem; height: 3.25rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  color: var(--tint, var(--color-primary));
+}
+.notes-strip__swatch svg { width: 1.3rem; height: 1.3rem; }
+.notes-strip__name { font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--ls-wide); color: var(--color-text); }
+.notes-strip__tier { font-family: var(--font-accent); font-style: italic; font-size: var(--fs-xs); color: var(--color-text-muted); }
+
+/* ---- Trust pills: compact checkmark badges for brand claims, replacing
+   the old divided icon-strip. ---- */
+.trust-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-lg); }
+.trust-pills__item {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+.trust-pills__item svg { width: 0.9rem; height: 0.9rem; color: var(--color-success); flex-shrink: 0; }
 
 /* ---- Fragrance facts stat row (Family / Longevity / Sillage) ---- */
 .scent-stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-border); max-width: 40rem; margin-inline: auto; }

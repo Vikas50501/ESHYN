@@ -117,47 +117,49 @@
   }
 
   /* Fixed brand-wide claims, except longevity which pulls the product's
-     own value — small bordered cards replacing the old plain-text strip. */
-  function renderFeatureHighlights() {
-    const wrap = document.querySelector('[data-pdp-feature-highlights]');
+     own value — compact checkmark pills rather than a divided icon strip. */
+  function renderTrustPills() {
+    const wrap = document.querySelector('[data-pdp-trust-pills]');
     if (!wrap) return;
     const scent = pdp.product.scent;
     const longevityLabel = scent ? (LONGEVITY_LABELS[scent.longevity] || `${scent.longevity}+ Hours`) : '8+ Hours';
-    const items = [
-      { label: 'Alcohol-Free', icon: '<path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5z"/>' },
-      { label: 'Skin-Friendly', icon: '<path d="M10 17s-6-3.6-6-8a4 4 0 018-.4A4 4 0 0116 9c0 4.4-6 8-6 8z"/>' },
-      { label: 'Deg-Bhapka Distilled', icon: '<path d="M4 10h9M9 6l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>' },
-      { label: `${longevityLabel} Longevity`, icon: '<circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round" stroke-linejoin="round"/>' },
-      { label: 'Cruelty-Free', icon: '<circle cx="10" cy="10" r="7"/><path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>' }
-    ];
-    wrap.innerHTML = items
-      .map((item) => `
-        <div class="feature-highlights__card">
-          <svg class="feature-highlights__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">${item.icon}</svg>
-          <span class="feature-highlights__label">${item.label}</span>
-        </div>
-      `)
-      .join('');
+    const items = ['Alcohol-Free', 'Skin-Friendly', 'Deg-Bhapka Distilled', `${longevityLabel} Longevity`, 'Cruelty-Free'];
+    const check = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l3.5 3.5L16 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    wrap.innerHTML = items.map((label) => `<span class="trust-pills__item">${check}${label}</span>`).join('');
   }
 
-  /* Condenses the notes/occasions storytelling into one accordion panel
-     instead of a dedicated section — same underlying scent data, presented
-     as expandable detail rather than page-length page-real-estate. */
-  function renderAccordionNotes() {
-    const wrap = document.querySelector('[data-pdp-accordion-notes]');
+  /* Notes as circular swatches (tinted by top/heart/base tier), visible
+     in the purchase column — same underlying scent data that used to sit
+     inside an accordion, now surfaced since notes drive the purchase
+     decision for a fragrance. */
+  const NOTE_TIER_META = {
+    top: { label: 'top', tint: 'var(--color-success)', icon: '<path d="M10 3v4M10 13v4M3 10h4M13 10h4" stroke-linecap="round"/>' },
+    heart: { label: 'heart', tint: 'var(--color-primary)', icon: '<path d="M10 17s-6-3.6-6-8a4 4 0 018-.4A4 4 0 0116 9c0 4.4-6 8-6 8z"/>' },
+    base: { label: 'base', tint: 'var(--color-secondary)', icon: '<path d="M4 10h12M10 4v12" stroke-linecap="round"/>' }
+  };
+  function renderNotesStrip() {
+    const wrap = document.querySelector('[data-pdp-notes-row]');
     if (!wrap) return;
     const scent = pdp.product.scent;
-    if (!scent || !scent.notes) { wrap.textContent = ''; return; }
+    const strip = wrap.closest('.notes-strip');
+    if (!scent || !scent.notes) { if (strip) strip.style.display = 'none'; return; }
+    if (strip) strip.style.display = '';
 
-    const lines = [
-      `<p><strong>Top</strong> — ${scent.notes.top.join(', ')}</p>`,
-      `<p><strong>Heart</strong> — ${scent.notes.heart.join(', ')}</p>`,
-      `<p><strong>Base</strong> — ${scent.notes.base.join(', ')}</p>`
-    ];
-    if (scent.occasions && scent.occasions.length) {
-      lines.push(`<p><strong>Best for</strong> — ${scent.occasions.join(', ')}</p>`);
-    }
-    wrap.innerHTML = lines.join('');
+    wrap.innerHTML = ['top', 'heart', 'base']
+      .flatMap((tier) => scent.notes[tier].map((name) => ({ name, tier })))
+      .map(({ name, tier }) => {
+        const meta = NOTE_TIER_META[tier];
+        return `
+          <div class="notes-strip__note">
+            <span class="notes-strip__swatch" style="--tint:${meta.tint}">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">${meta.icon}</svg>
+            </span>
+            <span class="notes-strip__name">${name}</span>
+            <span class="notes-strip__tier">${meta.label}</span>
+          </div>
+        `;
+      })
+      .join('');
   }
 
   function renderFragranceMeta() {
@@ -275,9 +277,9 @@
     renderGallery();
     renderOptions();
     renderPriceAndStock();
-    renderFeatureHighlights();
+    renderTrustPills();
     renderFragranceMeta();
-    renderAccordionNotes();
+    renderNotesStrip();
     renderReviews();
     renderRelated();
     renderFaq();
