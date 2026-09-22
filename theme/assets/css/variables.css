@@ -48,13 +48,21 @@
   --color-error: #a8402e;
   --color-sale: #a8402e;
 
-  /* ---- Typography ---- */
-  --font-display: 'Clash Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  /* Elegant serif echo of the logo's flourished script monogram — used
-     sparingly for brand moments (quotes, ornamental kickers), never for
-     body copy or UI text, so legibility never suffers. */
-  --font-accent: 'Cormorant Garamond', 'Times New Roman', serif;
+  /* ---- Typography ----
+     Editorial niche-fragrance system: Eiko (Fraunces stands in until
+     licensed Eiko files are supplied — same token, drop-in swap later)
+     carries every brand/display moment (headlines, fragrance names,
+     storytelling) with real artistic character rather than a generic
+     luxury serif. Söhne (Switzer stands in the same way) carries every
+     UI/functional moment (nav, body, prices, forms) with clean, precise
+     Swiss-grotesque structure. The two are never mixed within one text
+     element — that contrast is the hierarchy. */
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-body: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Same family as --font-display, reserved for italic editorial emphasis
+     (pull-quotes, ornamental kickers, selected emphasis words) rather
+     than upright headings. */
+  --font-accent: 'Fraunces', 'Times New Roman', serif;
 
   --fs-xs: 0.75rem;
   --fs-sm: 0.8125rem;
@@ -62,10 +70,15 @@
   --fs-md: 1.0625rem;
   --fs-lg: 1.25rem;
   --fs-xl: 1.75rem;
-  --fs-2xl: clamp(2.25rem, 1.75rem + 2.2vw, 3.5rem);
-  --fs-3xl: clamp(2.6rem, 1.8rem + 3.4vw, 4.7rem);
-  --fs-4xl: clamp(3rem, 1.7rem + 6vw, 7.2rem);
+  /* Product names — 28–36px, scales between mobile and desktop. */
+  --fs-2xl: clamp(1.75rem, 1.46rem + 1.3vw, 2.25rem);
+  /* Section headings — 40–60px, i.e. within the 52–64 desktop range. */
+  --fs-3xl: clamp(2.5rem, 2.06rem + 1.9vw, 3.75rem);
+  /* Hero headlines — 44–88px. */
+  --fs-4xl: clamp(2.75rem, 1.78rem + 4.15vw, 5.5rem);
 
+  /* Tight, near-1 line-height for large Eiko/Fraunces headline type. */
+  --lh-display: 0.92;
   --lh-tight: 1.08;
   --lh-snug: 1.25;
   --lh-normal: 1.5;
@@ -73,8 +86,8 @@
 
   --ls-tight: -0.02em;
   --ls-normal: 0;
-  --ls-wide: 0.06em;
-  --ls-wider: 0.14em;
+  --ls-wide: 0.08em;
+  --ls-wider: 0.12em;
 
   /* ---- Spacing scale ---- */
   --space-xs: 0.25rem;

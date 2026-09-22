@@ -61,7 +61,7 @@
 
     return `
       <article class="product-card" data-product-id="${product.id}">
-        <div class="product-card__media shine" data-tilt>
+        <div class="product-card__media">
           <div class="product-card__img--base">${window.esPlaceholder(product.media[0], product.title + ' — ' + product.type, icon)}</div>
           <div class="product-card__img--hover">${window.esPlaceholder(hoverTone, '', icon)}</div>
           ${badgeHtml ? `<div class="product-card__badges">${badgeHtml}</div>` : ''}

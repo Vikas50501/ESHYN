@@ -46,7 +46,7 @@
     }
     requestAnimationFrame(loop);
 
-    const hoverTargets = 'a, button, [data-tilt], input, textarea, .chip, .scent-card, .testimonial-deck__card';
+    const hoverTargets = 'a, button, input, textarea, .chip, .scent-card, .testimonial-deck__card';
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest(hoverTargets)) {
         ring.classList.add('is-hovering');
@@ -80,27 +80,6 @@
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
-  }
-
-  /* ---------------- Pointer-follow tilt ---------------- */
-  function initTilt() {
-    if (!fineHover() || reduceMotion()) return;
-    document.querySelectorAll('[data-tilt]').forEach((el) => {
-      let raf = null;
-      el.addEventListener('mousemove', (e) => {
-        if (raf) return;
-        raf = requestAnimationFrame(() => {
-          raf = null;
-          const r = el.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width - 0.5;
-          const py = (e.clientY - r.top) / r.height - 0.5;
-          el.style.transform = `perspective(800px) rotateX(${(-py * 7).toFixed(2)}deg) rotateY(${(px * 7).toFixed(2)}deg) translateZ(0)`;
-        });
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
-      });
-    });
   }
 
   /* ---------------- Word-cycle (hero headline, header subtitle, etc.) ---------------- */
@@ -405,7 +384,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     initCustomCursor();
     initScrollProgress();
-    initTilt();
     initWordCycle();
     initCountUp();
     initProcessScroll();

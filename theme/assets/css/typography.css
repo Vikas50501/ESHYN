@@ -1,7 +1,10 @@
 /* ==========================================================================
    ESHYN — Typography
-   Display: Clash Display (bold geometric grotesque, big personality)
-   Body:    General Sans (clean grotesque, wired for numerals/UI)
+   Display: Eiko / Fraunces stand-in (editorial serif with real artistic
+            character — headlines, fragrance names, brand storytelling;
+            weight 400 by default, italic reserved for selected emphasis)
+   Body:    Söhne / Switzer stand-in (nav, body copy, prices, forms,
+            metadata, buttons — clean, precise Swiss-grotesque structure)
    ========================================================================== */
 
 body {
@@ -11,34 +14,19 @@ body {
   color: var(--color-text);
 }
 
-h1, h2, h3, h4,
-.h1, .h2, .h3, .h4 {
+h1, h2, h3,
+.h1, .h2, .h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: var(--lh-tight);
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: -0.01em;
   color: var(--color-text);
 }
 
-h1, .h1 { font-size: var(--fs-4xl); letter-spacing: -0.04em; }
-h2, .h2 { font-size: var(--fs-3xl); letter-spacing: -0.035em; }
+h1, .h1 { font-size: var(--fs-4xl); }
+h2, .h2 { font-size: var(--fs-3xl); }
 h3, .h3 { font-size: var(--fs-2xl); }
-h4, .h4 { font-size: var(--fs-xl); font-family: var(--font-body); font-weight: 600; letter-spacing: var(--ls-normal); }
-
-/* Oversized watermark numerals used behind a few section headers */
-.section-numeral {
-  position: absolute;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(8rem, 6rem + 12vw, 20rem);
-  line-height: 1;
-  color: var(--color-accent);
-  opacity: 0.05;
-  pointer-events: none;
-  user-select: none;
-  z-index: -1;
-  letter-spacing: -0.05em;
-}
+h4, .h4 { font-family: var(--font-body); font-size: var(--fs-xl); font-weight: 600; letter-spacing: var(--ls-normal); color: var(--color-text); }
 
 .font-accent { font-family: var(--font-accent); font-style: italic; }
 

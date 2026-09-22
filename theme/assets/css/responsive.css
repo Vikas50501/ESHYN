@@ -83,8 +83,8 @@
   .product-rail .product-card { min-width: 0; max-width: none; }
   .section-head__nav { display: none; }
 
-  .values-list__item { grid-template-columns: 5rem 1fr auto; align-items: center; column-gap: var(--space-xl); }
-  .values-list__desc { grid-column: 3; grid-row: 1; max-width: 22rem; text-align: right; margin-top: 0 !important; }
+  .values-list__item { grid-template-columns: 1fr auto; align-items: center; column-gap: var(--space-xl); }
+  .values-list__desc { grid-column: 2; grid-row: 1; max-width: 22rem; text-align: right; margin-top: 0 !important; }
 
   .section-head { align-items: flex-end; }
 

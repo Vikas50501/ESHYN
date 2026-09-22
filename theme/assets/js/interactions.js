@@ -15,34 +15,6 @@
     document.querySelectorAll('[data-mask-reveal]').forEach((el) => el.classList.add('js-mask'));
   }
 
-  function initParallax() {
-    const items = Array.from(document.querySelectorAll('[data-parallax]'))
-      .map((el) => ({ el, inner: el.querySelector('.ph') }))
-      .filter((item) => item.inner);
-    if (!items.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let ticking = false;
-    function update() {
-      ticking = false;
-      const vh = window.innerHeight;
-      items.forEach(({ el, inner }) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > vh) return;
-        const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
-        const shift = Math.max(-6, Math.min(6, progress * -6));
-        inner.style.transform = `translateY(${shift}%)`;
-      });
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-  }
-
   function initStickyHeader() {
     const header = document.querySelector('[data-site-header]');
     if (!header) return;
@@ -199,6 +171,5 @@
     initTabs();
     initNewsletterForm();
     initMagneticButtons();
-    initParallax();
   });
 })();
